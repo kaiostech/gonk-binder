@@ -14,7 +14,7 @@ aidl_interface {
         "binder/b2g/connectivity/IConnectivityEventListener.aidl",
         "binder/b2g/connectivity/IConnectivity.aidl",
     ],
-    api_dir: "aidl/",
+    api_dir: "aidl/b2g-connectivity",
     backend: {
         cpp: {
             enabled: true,
@@ -29,5 +29,39 @@ aidl_interface {
     versions: [
         "1",
     ],
-
 }
+
+aidl_interface {
+    name: "binder_b2g_telephony_interface",
+    local_include_dir: "binder",
+    srcs: [
+        "binder/b2g/telephony/ims/CapabilityChangeRequestParcelable.aidl",
+        "binder/b2g/telephony/ims/CapabilityPairParcelable.aidl",
+        "binder/b2g/telephony/ims/IImsCapabilityCallback.aidl",
+        "binder/b2g/telephony/ims/IImsCapabilityListener.aidl",
+        "binder/b2g/telephony/ims/IImsConfig.aidl",
+        "binder/b2g/telephony/ims/IImsConfigCallback.aidl",
+        "binder/b2g/telephony/ims/IImsFeatureStatusListener.aidl",
+        "binder/b2g/telephony/ims/IImsMMTelFeature.aidl",
+        "binder/b2g/telephony/ims/IImsRegistration.aidl",
+        "binder/b2g/telephony/ims/IImsRegistrationListener.aidl",
+        "binder/b2g/telephony/ims/IImsServiceManager.aidl",
+        "binder/b2g/telephony/ims/ImsReasonInfoParcelable.aidl",
+    ],
+    api_dir: "aidl/b2g-telephony",
+    backend: {
+        cpp: {
+            enabled: true,
+        },
+        java: {
+            enabled: false,
+        },
+        ndk: {
+            enabled: false,
+        },
+    },
+    versions: [
+        "1",
+    ],
+}
+
