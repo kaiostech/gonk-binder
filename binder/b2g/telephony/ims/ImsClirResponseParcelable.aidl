@@ -25,21 +25,16 @@
 
 package b2g.telephony.ims;
 
-parcelable ImsReasonInfoParcelable {
+parcelable ImsClirResponseParcelable {
     /**
-     * For the main reason code.
-     * Possible values: TBD.
+     * Outgoing state.
+     * Possible values are IImsUt.CLIR_OUTGOING_*.
      */
-    int code;
+    int clirOutgoingStatus;
 
     /**
-     * For the extra information code.
-     * Possible values: TBD.
+     * CLIR status.
+     * Possible values are IImsUt.CLIR_STATUS_*.
      */
-    int extraCode;
-
-    /**
-     * For the extra message of the reason.
-     */
-    @utf8InCpp String extraMessage;
+    int clirInterrogationStatus;
 }

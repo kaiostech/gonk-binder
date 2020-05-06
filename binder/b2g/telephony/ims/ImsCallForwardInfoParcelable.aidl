@@ -25,21 +25,38 @@
 
 package b2g.telephony.ims;
 
-parcelable ImsReasonInfoParcelable {
-    /**
-     * For the main reason code.
-     * Possible values: TBD.
-     */
-    int code;
+parcelable ImsCallForwardInfoParcelable {
+   /**
+    * Call forward condition.
+    * Possible values are IImsUt.CDIV_CF_*.
+    */
+   int condition;
 
-    /**
-     * For the extra information code.
-     * Possible values: TBD.
-     */
-    int extraCode;
+   /**
+    * Call forward status.
+    * Possible values are IImsUt.CF_STATUS_*.
+    */
+   int status;
 
-    /**
-     * For the extra message of the reason.
-     */
-    @utf8InCpp String extraMessage;
+   /**
+    * Call forward toa.
+    * Possible values are IImsUt.TYPE_OF_ADDRESS_*.
+    */
+   int toa;
+
+   /**
+    * Call forward service class.
+    * Possible values are IImtUt.SERVICE_CLASS_*.
+    */
+   int serviceClass;
+
+   /**
+    * Phone number of forwarding address.
+    */
+   @utf8InCpp String number;
+
+   /**
+    * Call forward time seconds.
+    */
+   int timeSeconds;
 }

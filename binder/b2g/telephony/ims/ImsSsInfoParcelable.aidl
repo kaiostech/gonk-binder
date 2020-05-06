@@ -25,21 +25,9 @@
 
 package b2g.telephony.ims;
 
-parcelable ImsReasonInfoParcelable {
+parcelable ImsSsInfoParcelable {
     /**
-     * For the main reason code.
-     * Possible values: TBD.
+     * The SS status, possible values are IImsUt.STATUS_*.
      */
-    int code;
-
-    /**
-     * For the extra information code.
-     * Possible values: TBD.
-     */
-    int extraCode;
-
-    /**
-     * For the extra message of the reason.
-     */
-    @utf8InCpp String extraMessage;
+    int status;
 }

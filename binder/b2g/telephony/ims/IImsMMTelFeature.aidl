@@ -28,6 +28,7 @@ package b2g.telephony.ims;
 import b2g.telephony.ims.CapabilityChangeRequestParcelable;
 import b2g.telephony.ims.IImsCapabilityCallback;
 import b2g.telephony.ims.IImsCapabilityListener;
+import b2g.telephony.ims.IImsUt;
 
 interface IImsMMTelFeature {
     const int STATE_UNAVAILABLE = 0;
@@ -91,11 +92,16 @@ interface IImsMMTelFeature {
      * The modem/network capabilties change events will be notified via listener.
      * @param listener
      */
-    oneway void addCapabilityLisener(IImsCapabilityListener listener);
+    oneway void addCapabilityListener(IImsCapabilityListener listener);
 
     /**
      * To remove modem/network capabilities event listener.
      * @param listener
      */
     oneway void removeCapabilityListener(IImsCapabilityListener listener);
+
+    /**
+     * @return The IMS UT interface object to set/query supplementary service configuration.
+     */
+    IImsUt getUtInterface();
 }

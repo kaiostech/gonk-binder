@@ -38,6 +38,7 @@ aidl_interface {
     srcs: [
         "binder/b2g/telephony/ims/CapabilityChangeRequestParcelable.aidl",
         "binder/b2g/telephony/ims/CapabilityPairParcelable.aidl",
+        "binder/b2g/telephony/ims/ImsCallForwardInfoParcelable.aidl",
         "binder/b2g/telephony/ims/IImsCapabilityCallback.aidl",
         "binder/b2g/telephony/ims/IImsCapabilityListener.aidl",
         "binder/b2g/telephony/ims/IImsConfig.aidl",
@@ -48,6 +49,11 @@ aidl_interface {
         "binder/b2g/telephony/ims/IImsRegistrationListener.aidl",
         "binder/b2g/telephony/ims/IImsServiceManager.aidl",
         "binder/b2g/telephony/ims/ImsReasonInfoParcelable.aidl",
+        "binder/b2g/telephony/ims/IImsUt.aidl",
+        "binder/b2g/telephony/ims/IImsUtCallback.aidl",
+        "binder/b2g/telephony/ims/ImsClirResponseParcelable.aidl",
+        "binder/b2g/telephony/ims/ImsSsInfoParcelable.aidl"
+
     ],
     api_dir: "aidl/b2g-telephony",
     backend: {
