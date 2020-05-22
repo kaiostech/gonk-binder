@@ -7,24 +7,24 @@
  * owners.
  */
 
-#ifndef _CONNECTIVITY_EVENT_TEST_H_
-#define _CONNECTIVITY_EVENT_TEST_H_
+#ifndef _CONNECTIVITY_LISTENER_TEST_H_
+#define _CONNECTIVITY_LISTENER_TEST_H_
 
 #include <binder/BinderService.h>
 #include <b2g/connectivity/BnConnectivityEventListener.h>
 
-class ConnectivityEventTest
-    : public android::BinderService<ConnectivityEventTest>,
+class ConnectivityListenerTest
+    : public android::BinderService<ConnectivityListenerTest>,
       public b2g::connectivity::BnConnectivityEventListener {
  public:
-  ConnectivityEventTest();
-  ~ConnectivityEventTest() = default;
+  ConnectivityListenerTest();
+  ~ConnectivityListenerTest() = default;
 
-  static char const* getServiceName() { return "connectivityEventTest"; }
+  static char const* getServiceName() { return "connectivityListenerTest"; }
   android::binder::Status onActiveNetworkChanged(
       const ::b2g::connectivity::NetworkInfoParcel& networkInfo) override;
   android::binder::Status onNetworkChanged(
       const ::b2g::connectivity::NetworkInfoParcel& networkInfo) override;
 };
 
-#endif  // _CONNECTIVITY_EVENT_TEST_H_
+#endif  // _CONNECTIVITY_LISTENER_TEST_H_

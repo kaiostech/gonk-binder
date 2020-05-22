@@ -8,11 +8,13 @@
  */
 
 #include <binder/IServiceManager.h>
-#include "ConnectivityEventTest.h"
+#include "ConnectivityListenerTest.h"
+#include "ConnectivityServerTest.h"
 #include <b2g/connectivity/IConnectivity.h>
 
-#define KAIOS_CON_DEBUG(args...) \
-  __android_log_print(ANDROID_LOG_INFO, "KaiOS_AIDL_Connectivity", ##args)
+#define KAIOS_CON_DEBUG(args...)                                           \
+  __android_log_print(ANDROID_LOG_INFO, "KaiOS_AIDL_ConnectivityListener", \
+                      ##args)
 
 using android::IBinder;
 using android::IServiceManager;
@@ -30,15 +32,15 @@ void msleep(unsigned int ms) {
   select(0, NULL, NULL, NULL, &tv);
 }
 
-ConnectivityEventTest::ConnectivityEventTest() {
+ConnectivityListenerTest::ConnectivityListenerTest() {
   android::defaultServiceManager()->addService(
-      android::String16(ConnectivityEventTest::getServiceName()), this, false,
-      android::IServiceManager::DUMP_FLAG_PRIORITY_DEFAULT);
+      android::String16(ConnectivityListenerTest::getServiceName()), this,
+      false, android::IServiceManager::DUMP_FLAG_PRIORITY_DEFAULT);
   android::sp<android::ProcessState> ps(android::ProcessState::self());
   ps->startThreadPool();
 }
 
-Status ConnectivityEventTest::onActiveNetworkChanged(
+Status ConnectivityListenerTest::onActiveNetworkChanged(
     const NetworkInfoParcel& networkInfo) {
   KAIOS_CON_DEBUG("onActiveNetworkChanged event.");
   for (uint32_t i = 0; i < networkInfo.gateways.size(); i++) {
@@ -51,7 +53,7 @@ Status ConnectivityEventTest::onActiveNetworkChanged(
   return Status::ok();
 };
 
-Status ConnectivityEventTest::onNetworkChanged(
+Status ConnectivityListenerTest::onNetworkChanged(
     const NetworkInfoParcel& networkInfo) {
   KAIOS_CON_DEBUG("onNetworkChanged event.");
 
@@ -59,7 +61,14 @@ Status ConnectivityEventTest::onNetworkChanged(
   sp<IServiceManager> sm = android::defaultServiceManager();
   sp<IConnectivity> sConnectivity = nullptr;
   sp<IBinder> binderConnectivity;
+#if 0
+  // UnMark to get real server.
   binderConnectivity = sm->getService(IConnectivity::SERVICE_NAME());
+#else
+  // Acquire test server.
+  binderConnectivity = sm->getService(
+      android::String16(ConnectivityServerTest::getServiceName()));
+#endif
 
   if (binderConnectivity != nullptr) {
     sConnectivity = android::interface_cast<IConnectivity>(binderConnectivity);

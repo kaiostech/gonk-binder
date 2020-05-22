@@ -12,12 +12,12 @@ This project is to simulate 3rd party library/daemon use KaiOS AIDL interface.
 # GuidelineClient
 
 ## Service part
-Please refer `connectivity/ConnectivityEventTest.cpp` for service sample code.
+Please refer `connectivity/ConnectivityServerTest.cpp` for service sample code.
 
-`ConnectivityEventTest` acts as a BnConnectivityEventListener and also expose it as a service to system with name `connectivityEventTest`
+`ConnectivityServerTest` acts as a BnConnectivity and also expose it as a service to system with name `connectivityServerTest`
 
 ## Client part
-Please refer `KaiAIDL.cpp` for client sample code.
+Please refer `KaiAIDL.cpp` Client mode for client sample code.
 
 This sample code accesses Kai system api `IConnectivity`
 
@@ -43,9 +43,12 @@ make kaios_aidl_testing
    adb root;adb remount;
    adb push out/target/product/<ProjectName>/system/bin/kaios_aidl_testing /system/bin/.
 ```
-5. Run the daemon and start the test you need.
-   1. adb shell kaios_aidl_testing
-   2. Log will dump in android log, you may monitor by :
+5. Run the daemon and start the server/client test you need.
+   kaios_aidl_testing accept one argument to indicate client or server mod.
+   1. adb shell kaios_aidl_testing server
+   2. adb shell kaios_aidl_testing client
+   3. You shall able to see the interactive between server & client,
+      Log will dump in android log, you may monitor by :
 ```
 adb logcat |grep -E "KaiOS_AIDL_"
 ```

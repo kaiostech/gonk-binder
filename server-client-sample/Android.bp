@@ -27,7 +27,8 @@ cc_binary {
         "binder_b2g_connectivity_interface-cpp",
     ],
     srcs: [
-        "connectivity/ConnectivityEventTest.cpp",
+        "connectivity/ConnectivityListenerTest.cpp",
+        "connectivity/ConnectivityServerTest.cpp",
         "KaiAIDL.cpp",
     ],
 }
