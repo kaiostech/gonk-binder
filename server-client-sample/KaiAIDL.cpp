@@ -19,6 +19,8 @@
 #ifdef CONNECTIVITY_TEST
 #  include "connectivity/ConnectivityListenerTest.h"
 #  include "connectivity/ConnectivityServerTest.h"
+#  include "connectivity/TetheringListenerTest.h"
+#  include "connectivity/CaptivePortalListenerTest.h"
 #endif
 
 using android::IBinder;
@@ -28,8 +30,10 @@ using android::sp;
 using android::binder::Status;
 
 #ifdef CONNECTIVITY_TEST
+using b2g::connectivity::CaptivePortalLandingParcel;
 using b2g::connectivity::IConnectivity;
 using b2g::connectivity::NetworkInfoParcel;
+using b2g::connectivity::TetheringStatusParcel;
 void sigHandler(int aSignal);
 void msleep(unsigned int aMs);
 void convertNetworkInfoParcel(NetworkInfoParcel& aNetworkInfo,
@@ -84,6 +88,24 @@ int main(int argc, char* argv[]) {
               sConnectivityListenerTest));
       KAIOS_DEBUG("registered ConnectivityListenerTest %s",
                   state.isOk() ? "success" : "failed");
+
+      // Registered tethering listener.
+      auto sTetheringListenerTest = new TetheringListenerTest();
+      Status tetheringState = sConnectivity->registerTetheringStatusListener(
+          android::interface_cast<b2g::connectivity::ITetheringStatusListener>(
+              sTetheringListenerTest));
+      KAIOS_DEBUG("registered TetheringListenerTest %s",
+                  tetheringState.isOk() ? "success" : "failed");
+
+      // Registered captive portal listener.
+      auto sCaptivePortalListenerTest = new CaptivePortalListenerTest();
+      Status captivePortal =
+          sConnectivity->registerCaptivePortalLandingListener(
+              android::interface_cast<
+                  b2g::connectivity::ICaptivePortalLandingListener>(
+                  sCaptivePortalListenerTest));
+      KAIOS_DEBUG("registered CaptivePortalListenerTest %s",
+                  captivePortal.isOk() ? "success" : "failed");
     }
 #endif
     IPCThreadState::self()->joinThreadPool();
@@ -98,9 +120,15 @@ int main(int argc, char* argv[]) {
     signal(SIGHUP, sigHandler);
 
     NetworkInfoParcel networkInfoParcel;
+    TetheringStatusParcel tetheringStatusParcel;
+    CaptivePortalLandingParcel captivePortalParcel;
     int networkType = IConnectivity::NETWORK_TYPE_WIFI;
+    captivePortalParcel.networkType = networkType;
+
+    // Simulate update event every 10 seconds.
     for (;;) {
       msleep(10000);
+      // Network info update.
       networkType = (networkType == IConnectivity::NETWORK_TYPE_MOBILE)
                         ? IConnectivity::NETWORK_TYPE_WIFI
                         : IConnectivity::NETWORK_TYPE_MOBILE;
@@ -108,6 +136,24 @@ int main(int argc, char* argv[]) {
       KAIOS_DEBUG("Update networkInfo to %d", networkType);
       sConnectivityServerTest->updateActiveNetworkInfo(networkInfoParcel);
       sConnectivityServerTest->updateNetworkInfo(networkInfoParcel);
+
+      // Tethering status update.
+      tetheringStatusParcel.wifiState =
+          (tetheringStatusParcel.wifiState ==
+           IConnectivity::TETHERING_STATE_INACTIVE)
+              ? IConnectivity::TETHERING_STATE_ACTIVE
+              : IConnectivity::TETHERING_STATE_INACTIVE;
+      KAIOS_DEBUG("Update wifi tethering to %d",
+                  tetheringStatusParcel.wifiState);
+      sConnectivityServerTest->updateTetheringStatus(tetheringStatusParcel);
+
+      // Captive portal landing update.
+      captivePortalParcel.landing = captivePortalParcel.landing ? false : true;
+      KAIOS_DEBUG(" Update captive portal networkType %d to landing %s",
+                  captivePortalParcel.networkType,
+                  captivePortalParcel.landing ? "true" : "false");
+      sConnectivityServerTest->updateCaptivePortal(captivePortalParcel);
+
       if (serverStop) {
         break;
       }

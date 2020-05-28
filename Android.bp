@@ -11,9 +11,13 @@ aidl_interface {
     name: "binder_b2g_connectivity_interface",
     local_include_dir: "binder",
     srcs: [
+        "binder/b2g/connectivity/CaptivePortalLandingParcel.aidl",
         "binder/b2g/connectivity/NetworkInfoParcel.aidl",
+        "binder/b2g/connectivity/ICaptivePortalLandingListener.aidl",
         "binder/b2g/connectivity/IConnectivityEventListener.aidl",
         "binder/b2g/connectivity/IConnectivity.aidl",
+        "binder/b2g/connectivity/ITetheringStatusListener.aidl",
+        "binder/b2g/connectivity/TetheringStatusParcel.aidl",
     ],
     api_dir: "aidl/b2g-connectivity",
     backend: {

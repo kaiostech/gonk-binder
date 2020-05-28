@@ -10,6 +10,10 @@
 package b2g.connectivity;
 import b2g.connectivity.NetworkInfoParcel;
 import b2g.connectivity.IConnectivityEventListener;
+import b2g.connectivity.TetheringStatusParcel;
+import b2g.connectivity.ITetheringStatusListener;
+import b2g.connectivity.CaptivePortalLandingParcel;
+import b2g.connectivity.ICaptivePortalLandingListener;
 
 interface IConnectivity {
   /**
@@ -28,18 +32,56 @@ interface IConnectivity {
   NetworkInfoParcel[] getNetworkInfos();
 
   /**
-   * Register event listener
+   * Register connectivity event listener
    *
    * @param listener Connectivity event listener to register
    */
   void registerEventListener(IConnectivityEventListener listener);
 
   /**
-   * Unregister event listener
+   * Unregister connectivity event listener
    *
    * @param listener Connectivity event listener to register
    */
   void unregisterEventListener(IConnectivityEventListener listener);
+
+  /**
+   * Returns current tethering status.
+   */
+  TetheringStatusParcel getTetheringStatus();
+
+  /**
+   * Register tethering status listener
+   *
+   * @param listener Tethering status listener to register
+   */
+  void registerTetheringStatusListener(ITetheringStatusListener listener);
+
+  /**
+   * Unregister tethering status listener
+   *
+   * @param listener Tethering status listener to register
+   */
+  void unregisterTetheringStatusListener(ITetheringStatusListener listener);
+
+  /**
+   * Returns captive portal landing list.
+   */
+  CaptivePortalLandingParcel[] getCaptivePortalLandings();
+
+  /**
+   * Register captive portal landing listener
+   *
+   * @param listener Captive portal landing listener to register
+   */
+  void registerCaptivePortalLandingListener(ICaptivePortalLandingListener listener);
+
+  /**
+   * Unregister captive portal landing listener
+   *
+   * @param listener Captive portal listener to register
+   */
+  void unregisterCaptivePortalLandingListener(ICaptivePortalLandingListener listener);
 
   /**
    * Connectivity default service name.
@@ -76,4 +118,11 @@ interface IConnectivity {
   const int NETWORK_TYPE_MOBILE_IA = 11;
   const int NETWORK_TYPE_MOBILE_ECC = 12;
   const int NETWORK_TYPE_MOBILE_XCAP = 13;
+
+  /**
+   * Tethering state, sync from nsITetheringService.idl.
+   */
+  const int TETHERING_STATE_INACTIVE = 0;
+  const int TETHERING_STATE_ACTIVE = 1;
+
 }

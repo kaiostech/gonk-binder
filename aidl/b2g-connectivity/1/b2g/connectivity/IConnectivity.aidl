@@ -5,6 +5,12 @@ interface IConnectivity {
   b2g.connectivity.NetworkInfoParcel[] getNetworkInfos();
   void registerEventListener(b2g.connectivity.IConnectivityEventListener listener);
   void unregisterEventListener(b2g.connectivity.IConnectivityEventListener listener);
+  b2g.connectivity.TetheringStatusParcel getTetheringStatus();
+  void registerTetheringStatusListener(b2g.connectivity.ITetheringStatusListener listener);
+  void unregisterTetheringStatusListener(b2g.connectivity.ITetheringStatusListener listener);
+  b2g.connectivity.CaptivePortalLandingParcel[] getCaptivePortalLandings();
+  void registerCaptivePortalLandingListener(b2g.connectivity.ICaptivePortalLandingListener listener);
+  void unregisterCaptivePortalLandingListener(b2g.connectivity.ICaptivePortalLandingListener listener);
   const String SERVICE_NAME = "b2g_connectivity_binder";
   const int NETWORK_STATE_UNKNOWN = -1;
   const int NETWORK_STATE_CONNECTING = 0;
@@ -29,4 +35,6 @@ interface IConnectivity {
   const int NETWORK_TYPE_MOBILE_IA = 11;
   const int NETWORK_TYPE_MOBILE_ECC = 12;
   const int NETWORK_TYPE_MOBILE_XCAP = 13;
+  const int TETHERING_STATE_INACTIVE = 0;
+  const int TETHERING_STATE_ACTIVE = 1;
 }

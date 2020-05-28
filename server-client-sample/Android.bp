@@ -27,8 +27,10 @@ cc_binary {
         "binder_b2g_connectivity_interface-cpp",
     ],
     srcs: [
+        "connectivity/CaptivePortalListenerTest.cpp",
         "connectivity/ConnectivityListenerTest.cpp",
         "connectivity/ConnectivityServerTest.cpp",
+        "connectivity/TetheringListenerTest.cpp",
         "KaiAIDL.cpp",
     ],
 }
