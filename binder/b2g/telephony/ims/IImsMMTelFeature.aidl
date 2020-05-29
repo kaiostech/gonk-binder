@@ -26,79 +26,98 @@
 package b2g.telephony.ims;
 
 import b2g.telephony.ims.CapabilityChangeRequestParcelable;
+import b2g.telephony.ims.IImsCallSession;
 import b2g.telephony.ims.IImsCapabilityCallback;
 import b2g.telephony.ims.IImsCapabilityListener;
+import b2g.telephony.ims.IImsMMTelListener;
 import b2g.telephony.ims.IImsUt;
+import b2g.telephony.ims.ImsCallProfileParcelable;
 
 interface IImsMMTelFeature {
-    const int STATE_UNAVAILABLE = 0;
-    const int STATE_INITIALIZING = 1;
-    const int STATE_READY = 2;
+  const int STATE_UNAVAILABLE = 0;
+  const int STATE_INITIALIZING = 1;
+  const int STATE_READY = 2;
 
-    /**
-     * Voice calling (IR.92).
-     * 1 << 0.
-     */
-    const int CAPABILITY_TYPE_VOICE = 1;
+  /**
+   * Voice calling (IR.92).
+   * 1 << 0.
+   */
+  const int CAPABILITY_TYPE_VOICE = 1;
 
-    /**
-     * Video (IR.94).
-     * 1 << 1.
-     */
-    const int CAPABILITY_TYPE_VIDEO = 2;
+  /**
+   * Video (IR.94).
+   * 1 << 1.
+   */
+  const int CAPABILITY_TYPE_VIDEO = 2;
 
-    /**
-     * XCAP over Ut for supplementary services. (IR.92).
-     * 1 << 2.
-     */
-    const int CAPABILITY_TYPE_UT = 4;
+  /**
+   * XCAP over Ut for supplementary services. (IR.92).
+   * 1 << 2.
+   */
+  const int CAPABILITY_TYPE_UT = 4;
 
-    /**
-     * SMS (IR.92)
-     * 1 << 3.
-     */
-    const int CAPABILITY_TYPE_SMS = 8;
+  /**
+   * SMS (IR.92)
+   * 1 << 3.
+   */
+  const int CAPABILITY_TYPE_SMS = 8;
 
-    /**
-     * @return The latest feature status
-     *         Possible values: STATE_*.
-     */
-    int getFeatureStatus();
+  /**
+   * @return The latest feature status
+   *         Possible values: STATE_*.
+   */
+  int getFeatureStatus();
 
-    /**
-     * To change capabilities with given capability and radio tech pairs.
-     * Change request result will be notified by IImsCapabilityCallback#onChangeCapabilityResponse with status code.
-     *
-     * @param request The request pairs
-     * @param callback The callback to receive change error..
-     */
-    oneway void changeCapabilities(in CapabilityChangeRequestParcelable request,
-                                   IImsCapabilityCallback callback);
+  /**
+   * To change capabilities with given capability and radio tech pairs.
+   * Change request result will be notified by IImsCapabilityCallback#onChangeCapabilityResponse with status code.
+   *
+   * @param request The request pairs
+   * @param callback The callback to receive change error..
+   */
+  oneway void changeCapabilities(in CapabilityChangeRequestParcelable request,
+                                 IImsCapabilityCallback callback);
 
-    /**
-     * To the enable status with given capability and radio tech.
-     * @param capability
-     *        Possible values: CAPABILITY_TYPE_*.
-     * @param radioTech
-     *        Possible values: b2g.telephony.ims.RADIO_TECH_*.
-     * @return enable state.
-     */
-    boolean getCapability(int capability, int radioTech);
+  /**
+   * To the enable status with given capability and radio tech.
+   *
+   * @param capability
+   *        Possible values: CAPABILITY_TYPE_*.
+   * @param radioTech
+   *        Possible values: b2g.telephony.ims.RADIO_TECH_*.
+   * @return enable state.
+   */
+  boolean getCapability(int capability, int radioTech);
 
-    /**
-     * The modem/network capabilties change events will be notified via listener.
-     * @param listener
-     */
-    oneway void addCapabilityListener(IImsCapabilityListener listener);
+  /**
+   * The modem/network capabilties change events will be notified via listener.
+   * @param listener
+   */
+  oneway void addCapabilityListener(IImsCapabilityListener listener);
 
-    /**
-     * To remove modem/network capabilities event listener.
-     * @param listener
-     */
-    oneway void removeCapabilityListener(IImsCapabilityListener listener);
+  /**
+   * To remove modem/network capabilities event listener.
+   *
+   * @param listener
+   */
+  oneway void removeCapabilityListener(IImsCapabilityListener listener);
 
-    /**
-     * @return The IMS UT interface object to set/query supplementary service configuration.
-     */
-    IImsUt getUtInterface();
+  /**
+   * To get UT interface this MMFeature associated with.
+   * @return The IMS UT interface object to set/query supplementary service configuration.
+   */
+  IImsUt getUtInterface();
+
+  /**
+   * Sets listener to listen events. Mostly for incoming call at this moment.
+   * @param listener the listener to listen events
+   */
+  oneway void setListener(IImsMMTelListener listener);
+
+  /**
+   * To create an outgoing call session.
+   *
+   * @param profile call profile the call associated with.
+   */
+  IImsCallSession createCallSession(in ImsCallProfileParcelable profile);
 }

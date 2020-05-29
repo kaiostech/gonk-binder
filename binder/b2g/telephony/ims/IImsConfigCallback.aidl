@@ -14,15 +14,18 @@ oneway interface IImsConfigCallback {
      * The query result of IImsConfig.getConfigInt().
      * @param item IImsConfig.VOICE_OVER_WIFI_MODE, IImsConfig.VOICE_OVER_WIFI_SETTING_ENABLED.
      * @param value Please refer IImsConfig constants.
+     *        This parameter is valid only if status code is IImsConfig.OPERATION_STATUS_SUCCESS.
+     * @param status The query operation status.
+     *        Possible values: IImsConfig.OPERATION_STATUS_*.
      */
-    void onQueryConfigInt(int item, int value);
+    void onQueryConfigInt(int item, int value, int status);
 
     /**
      * @param item Please check item possible values for detail.
      *        Possiable valuse: IImsConfig.VOICE_OVER_WIFI_MODE, IImsConfig.VOICE_OVER_WIFI_SETTING_ENABLED
      * @param value Please check item's possible values for detail.
      *        Possible values: please refer IImsConfig constants.
-     * @param status The chante status.
+     * @param status The changes result status.
      *        Possible values: IImsConfig.OPERATION_STATUS_*.
      */
     void onSetConfigInt(int item, int value, int status);

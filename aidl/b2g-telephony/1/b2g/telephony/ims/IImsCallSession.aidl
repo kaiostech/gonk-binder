@@ -1,0 +1,30 @@
+package b2g.telephony.ims;
+interface IImsCallSession {
+  @utf8InCpp String getCallId();
+  b2g.telephony.ims.ImsCallProfileParcelable getCallProfile();
+  int getState();
+  oneway void setListener(in b2g.telephony.ims.IImsCallSessionListener listener);
+  void start(@utf8InCpp String callee, in b2g.telephony.ims.ImsCallProfileParcelable profile);
+  void accept(int callType, in b2g.telephony.ims.ImsStreamMediaProfileParcelable profile);
+  void reject(int reason);
+  void terminate(int reason);
+  void hold();
+  void resume();
+  void sendDtmf(char c, in b2g.telephony.ims.IImsDtmfCallback callback);
+  void startDtmf(char c);
+  void stopDtmf();
+  void close();
+  void sendUssd(@utf8InCpp String ussdMessage);
+  const int STATE_IDLE = 0;
+  const int STATE_INITIATED = 1;
+  const int STATE_NEGOTIATING = 2;
+  const int STATE_ESTABLISHING = 3;
+  const int STATE_ESTABLISHED = 4;
+  const int STATE_RENEGOTIATING = 5;
+  const int STATE_REESTABLISHING = 6;
+  const int STATE_TERMINATING = 7;
+  const int STATE_TERMINATED = 8;
+  const int STATE_INVALID = -1;
+  const int USSD_MODE_NOTIFY = 0;
+  const int USSD_MODE_REQUEST = 1;
+}

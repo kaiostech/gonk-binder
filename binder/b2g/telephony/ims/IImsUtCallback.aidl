@@ -64,7 +64,7 @@ oneway interface IImsUtCallback {
 
     /**
      * Notified when query failed.
-     * @param id The request i.
+     * @param id The request id.
      * @param error
      */
     void utConfigurationQueryFailed(int id, in ImsReasonInfoParcelable error);

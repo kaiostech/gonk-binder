@@ -28,7 +28,7 @@ package b2g.telephony.ims;
 import b2g.telephony.ims.ImsReasonInfoParcelable;
 
 /**
- * To provide callbacks for registartion/service/configruation changeds.
+ * To provide callbacks for registration/service/configuration changeds.
  */
 oneway interface IImsRegistrationListener {
     /**

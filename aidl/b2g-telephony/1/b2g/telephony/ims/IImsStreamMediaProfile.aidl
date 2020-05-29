@@ -1,0 +1,31 @@
+package b2g.telephony.ims;
+interface IImsStreamMediaProfile {
+  const int AUDIO_QUALITY_NONE = 0;
+  const int AUDIO_QUALITY_AMR = 1;
+  const int AUDIO_QUALITY_AMR_WB = 2;
+  const int AUDIO_QUALITY_QCELP13K = 3;
+  const int AUDIO_QUALITY_EVRC = 4;
+  const int AUDIO_QUALITY_EVRC_B = 5;
+  const int AUDIO_QUALITY_EVRC_WB = 6;
+  const int AUDIO_QUALITY_EVRC_NW = 7;
+  const int AUDIO_QUALITY_GSM_EFR = 8;
+  const int AUDIO_QUALITY_GSM_FR = 9;
+  const int AUDIO_QUALITY_GSM_HR = 10;
+  const int AUDIO_QUALITY_G711U = 11;
+  const int AUDIO_QUALITY_G723 = 12;
+  const int AUDIO_QUALITY_G711A = 13;
+  const int AUDIO_QUALITY_G722 = 14;
+  const int AUDIO_QUALITY_G711AB = 15;
+  const int AUDIO_QUALITY_G729 = 16;
+  const int AUDIO_QUALITY_EVS_NB = 17;
+  const int AUDIO_QUALITY_EVS_WB = 18;
+  const int AUDIO_QUALITY_EVS_SWB = 19;
+  const int AUDIO_QUALITY_EVS_FB = 20;
+  const int RTT_MODE_DISABLED = 0;
+  const int RTT_MODE_FULL = 1;
+  const int DIRECTION_INVALID = -1;
+  const int DIRECTION_INACTIVE = 0;
+  const int DIRECTION_RECEIVE = 1;
+  const int DIRECTION_SEND = 2;
+  const int DIRECTION_SEND_RECEIVE = 3;
+}

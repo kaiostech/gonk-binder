@@ -31,30 +31,37 @@ import b2g.telephony.ims.IImsConfigCallback;
  * Provides APIs to access IMS configuration.
  */
 interface IImsConfig {
-    const int VOICE_OVER_WIFI_ROAMING_DISASBLED = 0;
-    const int VOICE_OVER_WIFI_ROAMING_ENABLED = 1;
+    // const int VOICE_OVER_WIFI_ROAMING_DISASBLED = 0;
+    // const int VOICE_OVER_WIFI_ROAMING_ENABLED = 1;
 
-    /**
-     * Wi-Fi calling roaming status.
-     * Possible values: VOICE_OVER_WIFI_ROAMING_*
-     */
-    const int VOICE_OVER_WIFI_ROAMING = 26;
+    // /**
+    //  * Config item: Wi-Fi calling roaming status.
+    //  * Possible values: VOICE_OVER_WIFI_ROAMING_*.
+    //  */
+    // const int VOICE_OVER_WIFI_ROAMING = 26;
 
     const int WIFI_MODE_WIFI_ONLY = 0;
     const int WIFI_MODE_CELLULAR_PREFERRED = 1;
     const int WIFI_MODE_WIFI_PREFERRED = 2;
 
     /**
+     * Config item: Voice over Wi-Fi mode.
+     * Possible values: WIFI_MODE_*.
      */
     const int VOICE_OVER_WIFI_MODE = 27;
 
-    const int VOICE_OVER_WIFI_DISABLED = 0;
-    const int VOICE_OVER_WIFI_ENABLED = 1;
+    // const int VOICE_OVER_WIFI_DISABLED = 0;
+    // const int VOICE_OVER_WIFI_ENABLED = 1;
+
+    // /**
+    //  * Config item: voice over Wi-Fi settings.
+    //  * Possivle values: VOICE_OVER_WIFI_*.
+    //  */
+    // const int VOICE_OVER_WIFI_SETTING_ENABLED = 28;
 
     /**
+     * Config setter result sttus codes.
      */
-    const int VOICE_OVER_WIFI_SETTING_ENABLED = 28;
-
     const int OPERATION_STATUS_UNKNOWN = -1;
     const int OPERATION_STATUS_SUCCESS = 0;
     const int OPERATION_STATUS_FAILED =  1;
