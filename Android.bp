@@ -17,6 +17,8 @@ aidl_interface {
         "binder/b2g/connectivity/IConnectivityEventListener.aidl",
         "binder/b2g/connectivity/IConnectivity.aidl",
         "binder/b2g/connectivity/ITetheringStatusListener.aidl",
+        "binder/b2g/connectivity/IWifi.aidl",
+        "binder/b2g/connectivity/IWifiStateListener.aidl",
         "binder/b2g/connectivity/TetheringStatusParcel.aidl",
     ],
     api_dir: "aidl/b2g-connectivity",
