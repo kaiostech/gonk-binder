@@ -75,37 +75,44 @@ int main(int argc, char* argv[]) {
       sConnectivity =
           android::interface_cast<IConnectivity>(binderConnectivity);
 
-      // Try get something.
-      bool isAlive = false;
-      sConnectivity->isAlive(&isAlive);
-      KAIOS_DEBUG("Connectivity binder is %s", isAlive ? "alive" : "dead");
+      int32_t version = sConnectivity->getInterfaceVersion();
+      KAIOS_DEBUG("Connectivity binder service version is %d", version);
 
-      // Registered listener.
-      auto sConnectivityListenerTest = new ConnectivityListenerTest();
-      Status state = sConnectivity->registerEventListener(
-          android::interface_cast<
-              b2g::connectivity::IConnectivityEventListener>(
-              sConnectivityListenerTest));
-      KAIOS_DEBUG("registered ConnectivityListenerTest %s",
-                  state.isOk() ? "success" : "failed");
+      // Interface version "1" start from 10000.
+      if (version >= 10000) {
+        // Try get something.
+        bool isAlive = false;
+        sConnectivity->isAlive(&isAlive);
+        KAIOS_DEBUG("Connectivity binder is %s", isAlive ? "alive" : "dead");
 
-      // Registered tethering listener.
-      auto sTetheringListenerTest = new TetheringListenerTest();
-      Status tetheringState = sConnectivity->registerTetheringStatusListener(
-          android::interface_cast<b2g::connectivity::ITetheringStatusListener>(
-              sTetheringListenerTest));
-      KAIOS_DEBUG("registered TetheringListenerTest %s",
-                  tetheringState.isOk() ? "success" : "failed");
+        // Registered listener.
+        auto sConnectivityListenerTest = new ConnectivityListenerTest();
+        Status state = sConnectivity->registerEventListener(
+            android::interface_cast<
+                b2g::connectivity::IConnectivityEventListener>(
+                sConnectivityListenerTest));
+        KAIOS_DEBUG("registered ConnectivityListenerTest %s",
+                    state.isOk() ? "success" : "failed");
 
-      // Registered captive portal listener.
-      auto sCaptivePortalListenerTest = new CaptivePortalListenerTest();
-      Status captivePortal =
-          sConnectivity->registerCaptivePortalLandingListener(
-              android::interface_cast<
-                  b2g::connectivity::ICaptivePortalLandingListener>(
-                  sCaptivePortalListenerTest));
-      KAIOS_DEBUG("registered CaptivePortalListenerTest %s",
-                  captivePortal.isOk() ? "success" : "failed");
+        // Registered tethering listener.
+        auto sTetheringListenerTest = new TetheringListenerTest();
+        Status tetheringState = sConnectivity->registerTetheringStatusListener(
+            android::interface_cast<
+                b2g::connectivity::ITetheringStatusListener>(
+                sTetheringListenerTest));
+        KAIOS_DEBUG("registered TetheringListenerTest %s",
+                    tetheringState.isOk() ? "success" : "failed");
+
+        // Registered captive portal listener.
+        auto sCaptivePortalListenerTest = new CaptivePortalListenerTest();
+        Status captivePortal =
+            sConnectivity->registerCaptivePortalLandingListener(
+                android::interface_cast<
+                    b2g::connectivity::ICaptivePortalLandingListener>(
+                    sCaptivePortalListenerTest));
+        KAIOS_DEBUG("registered CaptivePortalListenerTest %s",
+                    captivePortal.isOk() ? "success" : "failed");
+      }
     }
 #endif
     IPCThreadState::self()->joinThreadPool();

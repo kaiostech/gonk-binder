@@ -96,6 +96,21 @@ class ConnectivityServerTest
   void updateCaptivePortal(b2g::connectivity::CaptivePortalLandingParcel&
                                aCaptivePortalLandingParcel);
 
+  // Version control in case we jump into library with newer version.
+  android::status_t onTransact(uint32_t aCode, const ::android::Parcel& aData,
+                               ::android::Parcel* aReply,
+                               uint32_t aFlags) override {
+    // Refer IConnectivity.aidl for function nums.
+    uint32_t MAX_AIDL_FUNC = IBinder::FIRST_CALL_TRANSACTION + 11;
+    // getInterfaceVersion()
+    uint32_t VERSION_FUNC = android::IBinder::FIRST_CALL_TRANSACTION + 16777214;
+
+    if (aCode <= MAX_AIDL_FUNC || aCode == VERSION_FUNC) {
+      return BnConnectivity::onTransact(aCode, aData, aReply, aFlags);
+    }
+    return BBinder::onTransact(aCode, aData, aReply, aFlags);
+  }
+
  private:
   // Network information.
   std::mutex mNetworkEventMutex;
