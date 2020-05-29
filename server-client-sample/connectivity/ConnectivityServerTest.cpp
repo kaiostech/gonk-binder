@@ -40,7 +40,7 @@ Status ConnectivityServerTest::isAlive(bool* aLive) {
 }
 
 // Network function
-Status ConnectivityServerTest::registerEventListener(
+Status ConnectivityServerTest::addEventListener(
     const sp<IConnectivityEventListener>& listener) {
   std::lock_guard lock(mNetworkEventMutex);
 
@@ -53,7 +53,7 @@ Status ConnectivityServerTest::registerEventListener(
     ~DeathRecipient() override = default;
     void binderDied(const android::wp<android::IBinder>& /* who */) override {
       KAIOS_CON_DEBUG("Client is dead, remove listener");
-      mConnectivityServerTest->unregisterEventListener(mListener);
+      mConnectivityServerTest->removeEventListener(mListener);
     }
 
    private:
@@ -69,7 +69,7 @@ Status ConnectivityServerTest::registerEventListener(
   return Status::ok();
 }
 
-Status ConnectivityServerTest::unregisterEventListener(
+Status ConnectivityServerTest::removeEventListener(
     const sp<IConnectivityEventListener>& listener) {
   std::lock_guard lock(mNetworkEventMutex);
   mConnectivityListenerTestMap.erase(listener);
@@ -135,7 +135,7 @@ Status ConnectivityServerTest::getTetheringStatus(
   return Status::ok();
 }
 
-Status ConnectivityServerTest::registerTetheringStatusListener(
+Status ConnectivityServerTest::addTetheringStatusListener(
     const sp<ITetheringStatusListener>& listener) {
   std::lock_guard lock(mTetheringMutex);
 
@@ -148,7 +148,7 @@ Status ConnectivityServerTest::registerTetheringStatusListener(
     ~DeathRecipient() override = default;
     void binderDied(const android::wp<android::IBinder>& /* who */) override {
       KAIOS_CON_DEBUG("Client is dead, remove tethering listener");
-      mConnectivityServerTest->unregisterTetheringStatusListener(mListener);
+      mConnectivityServerTest->removeTetheringStatusListener(mListener);
     }
 
    private:
@@ -165,7 +165,7 @@ Status ConnectivityServerTest::registerTetheringStatusListener(
   return Status::ok();
 }
 
-Status ConnectivityServerTest::unregisterTetheringStatusListener(
+Status ConnectivityServerTest::removeTetheringStatusListener(
     const sp<ITetheringStatusListener>& listener) {
   std::lock_guard lock(mTetheringMutex);
   mTetheringListenerTestMap.erase(listener);
@@ -187,7 +187,7 @@ Status ConnectivityServerTest::getCaptivePortalLandings(
   return Status::ok();
 }
 
-Status ConnectivityServerTest::registerCaptivePortalLandingListener(
+Status ConnectivityServerTest::addCaptivePortalLandingListener(
     const sp<ICaptivePortalLandingListener>& listener) {
   std::lock_guard lock(mCaptivePortalMutex);
 
@@ -200,8 +200,7 @@ Status ConnectivityServerTest::registerCaptivePortalLandingListener(
     ~DeathRecipient() override = default;
     void binderDied(const android::wp<android::IBinder>& /* who */) override {
       KAIOS_CON_DEBUG("Client is dead, remove captive portal listener");
-      mConnectivityServerTest->unregisterCaptivePortalLandingListener(
-          mListener);
+      mConnectivityServerTest->removeCaptivePortalLandingListener(mListener);
     }
 
    private:
@@ -218,7 +217,7 @@ Status ConnectivityServerTest::registerCaptivePortalLandingListener(
   return Status::ok();
 }
 
-Status ConnectivityServerTest::unregisterCaptivePortalLandingListener(
+Status ConnectivityServerTest::removeCaptivePortalLandingListener(
     const sp<ICaptivePortalLandingListener>& listener) {
   std::lock_guard lock(mCaptivePortalMutex);
   mCaptivePortalListenerTestMap.erase(listener);

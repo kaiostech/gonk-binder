@@ -108,11 +108,34 @@ void queryXXX(QueryCallback cb);
   void setAction(ActionResponseCallback cb);
 ```
 
-- if a callback is used to receive unsolicited events from service, please use interface name ended with `Listener`, ex:
+## Listeners
+- If a listener is used to receive unsolicited events from service, please use interface name ended with `Listener`, ex:
 ```java
 void addNetworkStateChangeListener(NetworkStateChangeListener listener);
 
 void removeNetworkStateChangeListener(NetworkStateChangeListener listener);
+```
+
+- If your service accept multiple listeners, please name your listener registration api with prefix `add` and `remove`, ex:
+```java
+void addNetworkStateChangeListener(NetworkStateChangeListener listener);
+
+void removeNetworkStateChangeListener(NetworkStateChangeListener listener);
+```
+
+- If you service accept one listener only and the later one will override previous one, please name your listener registration api with prefix `set`, ex:
+```java
+// set(null) to unsubscribe.
+void setNetworkStateChangeListener(NetworkStateChangeListener listener);
+```
+
+## Listeners API
+- If a method is called after some operation is done, please name the api end with `Changed`.
+- If you are unable to guarantee it use `Change`.
+- For event indication, please named with prefix `on`.
+```java
+  void onXXXXChanged();
+  void onXXXChange();
 ```
 
 ## String type

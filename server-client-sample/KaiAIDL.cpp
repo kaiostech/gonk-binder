@@ -87,7 +87,7 @@ int main(int argc, char* argv[]) {
 
         // Registered listener.
         auto sConnectivityListenerTest = new ConnectivityListenerTest();
-        Status state = sConnectivity->registerEventListener(
+        Status state = sConnectivity->addEventListener(
             android::interface_cast<
                 b2g::connectivity::IConnectivityEventListener>(
                 sConnectivityListenerTest));
@@ -96,7 +96,7 @@ int main(int argc, char* argv[]) {
 
         // Registered tethering listener.
         auto sTetheringListenerTest = new TetheringListenerTest();
-        Status tetheringState = sConnectivity->registerTetheringStatusListener(
+        Status tetheringState = sConnectivity->addTetheringStatusListener(
             android::interface_cast<
                 b2g::connectivity::ITetheringStatusListener>(
                 sTetheringListenerTest));
@@ -105,11 +105,10 @@ int main(int argc, char* argv[]) {
 
         // Registered captive portal listener.
         auto sCaptivePortalListenerTest = new CaptivePortalListenerTest();
-        Status captivePortal =
-            sConnectivity->registerCaptivePortalLandingListener(
-                android::interface_cast<
-                    b2g::connectivity::ICaptivePortalLandingListener>(
-                    sCaptivePortalListenerTest));
+        Status captivePortal = sConnectivity->addCaptivePortalLandingListener(
+            android::interface_cast<
+                b2g::connectivity::ICaptivePortalLandingListener>(
+                sCaptivePortalListenerTest));
         KAIOS_DEBUG("registered CaptivePortalListenerTest %s",
                     captivePortal.isOk() ? "success" : "failed");
       }

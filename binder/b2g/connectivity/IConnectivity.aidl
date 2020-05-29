@@ -36,14 +36,14 @@ interface IConnectivity {
    *
    * @param listener Connectivity event listener to register
    */
-  void registerEventListener(IConnectivityEventListener listener);
+  void addEventListener(IConnectivityEventListener listener);
 
   /**
    * Unregister connectivity event listener
    *
    * @param listener Connectivity event listener to register
    */
-  void unregisterEventListener(IConnectivityEventListener listener);
+  void removeEventListener(IConnectivityEventListener listener);
 
   /**
    * Returns current tethering status.
@@ -55,14 +55,14 @@ interface IConnectivity {
    *
    * @param listener Tethering status listener to register
    */
-  void registerTetheringStatusListener(ITetheringStatusListener listener);
+  void addTetheringStatusListener(ITetheringStatusListener listener);
 
   /**
    * Unregister tethering status listener
    *
    * @param listener Tethering status listener to register
    */
-  void unregisterTetheringStatusListener(ITetheringStatusListener listener);
+  void removeTetheringStatusListener(ITetheringStatusListener listener);
 
   /**
    * Returns captive portal landing list.
@@ -74,14 +74,14 @@ interface IConnectivity {
    *
    * @param listener Captive portal landing listener to register
    */
-  void registerCaptivePortalLandingListener(ICaptivePortalLandingListener listener);
+  void addCaptivePortalLandingListener(ICaptivePortalLandingListener listener);
 
   /**
    * Unregister captive portal landing listener
    *
    * @param listener Captive portal listener to register
    */
-  void unregisterCaptivePortalLandingListener(ICaptivePortalLandingListener listener);
+  void removeCaptivePortalLandingListener(ICaptivePortalLandingListener listener);
 
   /**
    * Connectivity default service name.

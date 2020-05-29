@@ -35,11 +35,11 @@ class ConnectivityServerTest
       std::map<const android::sp<b2g::connectivity::IConnectivityEventListener>,
                const android::sp<android::IBinder::DeathRecipient>>;
 
-  android::binder::Status registerEventListener(
+  android::binder::Status addEventListener(
       const android::sp<b2g::connectivity::IConnectivityEventListener>&
           listener) override;
 
-  android::binder::Status unregisterEventListener(
+  android::binder::Status removeEventListener(
       const android::sp<b2g::connectivity::IConnectivityEventListener>&
           listener) override;
 
@@ -65,11 +65,11 @@ class ConnectivityServerTest
       b2g::connectivity::TetheringStatusParcel* aTetheringStatusParcel)
       override;
 
-  android::binder::Status registerTetheringStatusListener(
+  android::binder::Status addTetheringStatusListener(
       const android::sp<b2g::connectivity::ITetheringStatusListener>& listener)
       override;
 
-  android::binder::Status unregisterTetheringStatusListener(
+  android::binder::Status removeTetheringStatusListener(
       const android::sp<b2g::connectivity::ITetheringStatusListener>& listener)
       override;
 
@@ -85,11 +85,11 @@ class ConnectivityServerTest
       std::vector<b2g::connectivity::CaptivePortalLandingParcel>*
           aCaptivePortalLandings) override;
 
-  android::binder::Status registerCaptivePortalLandingListener(
+  android::binder::Status addCaptivePortalLandingListener(
       const android::sp<b2g::connectivity::ICaptivePortalLandingListener>&
           listener) override;
 
-  android::binder::Status unregisterCaptivePortalLandingListener(
+  android::binder::Status removeCaptivePortalLandingListener(
       const android::sp<b2g::connectivity::ICaptivePortalLandingListener>&
           listener) override;
 
