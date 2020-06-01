@@ -67,10 +67,7 @@ interface IImsMMTelFeature {
 
     /**
      * To change capabilities with given capability and radio tech pairs.
-     * If any subset of request succeed, the succeed signal will be notified via
-     *   IImsCapabilityCall.onChangeCapabilityConfigurationSuccess.
-     * If any subset of request failed, the failed detail will be notified via
-     *  IImsCapabilityCallback.onChangeCapabilityConfigurationError.
+     * Change request result will be notified by IImsCapabilityCallback#onChangeCapabilityResponse with status code.
      *
      * @param request The request pairs
      * @param callback The callback to receive change error..
