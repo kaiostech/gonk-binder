@@ -29,36 +29,52 @@ import b2g.telephony.ims.IImsMMTelFeature;
 import b2g.telephony.ims.IImsFeatureStatusListener;
 import b2g.telephony.ims.IImsConfig;
 import b2g.telephony.ims.IImsRegistration;
+import b2g.telephony.IDeathNotifier;
 
 interface IImsServiceManager {
 
-    const String IMS_SERVICE_MANAGER = "imsservicemanager";
-    /**
-     * To turn on/off ims.
-     * It will trigger IMS registration process.
-     * @param slotId The slot id to be turn on/off, start from 0.
-     * @param on
-     */
-    oneway void turnOnIms(int slotId, boolean on);
+  const String IMS_SERVICE_MANAGER = "imsservicemanager";
 
-    /**
-     * To know current IMS registration info.
-     * @param slotId The slot id.
-     * @return The IMS registration object.
-     */
-    IImsRegistration getRegistration(int slotId);
+  /**
+   * To turn on/off ims.
+   * It will trigger IMS registration process.
+   *
+   * @param slotId The slot id to be turn on/off, start from 0.
+   * @param on
+   */
+  oneway void turnOnIms(int slotId, boolean on);
 
-    /**
-     * To get IMS configuration.
-     * @param slotId The slot id.
-     * @return the IMS configuration object.
-     */
-    IImsConfig getConfig(int slotId);
+  /**
+   * To know current IMS registration info.
+   *
+   * @param slotId The slot id.
+   * @return The IMS registration object.
+   */
+  IImsRegistration getRegistration(int slotId);
 
-    /**
-     * To create MMTel service (for call service).
-     * @param slotId
-     * @param listener The listener to receive status change events.
-     */
-    IImsMMTelFeature createMmTelFeature(int slotId, in IImsFeatureStatusListener listener);
+  /**
+   * To get IMS configuration.
+   *
+   * @param slotId The slot id.
+   * @return the IMS configuration object.
+   */
+  IImsConfig getConfig(int slotId);
+
+  /**
+   * To create MMTel service (for call service).
+   *
+   * @param slotId
+   * @param listener The listener to receive status change events.
+   */
+  IImsMMTelFeature createMmTelFeature(int slotId, in IImsFeatureStatusListener listener);
+
+  /**
+   * A shallow object for remote to do linkToDeath.
+   * If owner process, ex: Telephony FW, get crash, the binderDied would be triggered multiple times for each listener/callback.
+   * If you need a single/universal signale to know owner process status, this is it.
+   * Owner process should set this once and remote side could track owner process death status via aNotifier.
+   *
+   * @param aNotifier the object which is used to represent the universal live status of owner process.
+   */
+  oneway void setDeathNotifier(in IDeathNotifier aNotifier);
 }

@@ -42,6 +42,7 @@ aidl_interface {
     name: "binder_b2g_telephony_interface",
     local_include_dir: "binder",
     srcs: [
+        "binder/b2g/telephony/IDeathNotifier.aidl",
         "binder/b2g/telephony/data/IDataCall.aidl",
         "binder/b2g/telephony/ims/CapabilityChangeRequestParcelable.aidl",
         "binder/b2g/telephony/ims/CapabilityPairParcelable.aidl",
@@ -60,7 +61,6 @@ aidl_interface {
         "binder/b2g/telephony/ims/IImsUtCallback.aidl",
         "binder/b2g/telephony/ims/ImsClirResponseParcelable.aidl",
         "binder/b2g/telephony/ims/ImsSsInfoParcelable.aidl"
-
     ],
     api_dir: "aidl/b2g-telephony",
     backend: {
