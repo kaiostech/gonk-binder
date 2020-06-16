@@ -9,6 +9,8 @@
 
 package b2g.telephony.data;
 
+import b2g.telephony.data.IDataCallEventListener;
+
 interface IDataCall {
 
   /**
@@ -37,4 +39,23 @@ interface IDataCall {
    * The result will be notified via IConnectivityEventListener#onNetworkChanged.
    */
   void deactivateDataCallByType(int sreviceId, int networkType);
+
+  /**
+   * The current data slot id (0-base)
+   * @return slot id.
+   */
+  int getDefaultSlotId();
+
+  /**
+   * Sets listener to listen events.
+   * @param listener the listener to listen events.
+   *        Please refer IDataCallEventListener for possible events.
+   */
+  oneway void addEventListener(IDataCallEventListener listener);
+
+  /**
+   * To remove listener.
+   * @param listener listener to be removed.
+   */
+  oneway void removeEventListener(IDataCallEventListener listener);
 }
