@@ -26,7 +26,9 @@
 package b2g.telephony.ims;
 
 import b2g.telephony.ims.ImsCallProfileParcelable;
+import b2g.telephony.ims.ImsConferenceParticipantParcelable;
 import b2g.telephony.ims.ImsReasonInfoParcelable;
+import b2g.telephony.ims.ImsSuppServiceNotificationParcelable;
 import b2g.telephony.ims.ImsStreamMediaProfileParcelable;
 
 oneway interface IImsCallSessionListener {
@@ -101,22 +103,88 @@ oneway interface IImsCallSessionListener {
   void onCallSessionResumeReceived(in ImsCallProfileParcelable profile);
 
   /**
-   * Notifies the result of call upgrade / downgrade or other updates.
-   * @param profile the updated call profile.
+   * Notified when call updated.
    */
-  void callSessionUpdated(in ImsCallProfileParcelable profile);
+  void onCallSessionUpdated(in ImsCallProfileParcelable profile);
 
-  /* TBD, most likely for video call.
-   * Notifies the call upgrade / downgrade or other update request is failed.
-   *
-   * @param reasonInfo the failure reason info.
+  /**
+   * Device received RTT modify request from remote.
+   * @param toProfile call profile with updated attribute.
    */
-  // void callSessionUpdateFailed(in ImsReasonInfoParcelable reasonInfo);
+  void onCallSessionRttModifyRequestReceived(in ImsCallProfileParcelable toProfile);
 
-  /* TBD, most likely for video call.
-   * Notifies call upgrade / download or other update request been requested from remote site.
-   *
-   * @param profile the requested call profile.
+  /**
+   * Device issued RTT modify request and received remote response.
+   * @param status remote response.
+   *        Possible values: IImsCallSession#SESSION_MODIFY_REQUEST_*.
    */
-  //void callSessionUpdateReceived(in ImsCallProfileParcelable profile);
+  void onCallSessionRttModifyResponseReceived(in int status);
+
+  /**
+   * Device received RTT message from remote.
+   * @param rttMessage rtt message.
+   */
+  void onCallSessionRttMessageReceived(in @utf8InCpp String rttMessage);
+
+  /**
+   * Notifies the supplementary service information for this session.
+   */
+  void onCallSessionSuppServiceReceived(in ImsSuppServiceNotificationParcelable suppSrvNotification);
+
+  /**
+   * Notifies the TTY mode change by remote.
+   * @param mode new tty mode.
+   *        Possible values: IImsMMTelFeature#TTY_MODE_*.
+   */
+  void onCallSessionTtyModeReceived(in int mode);
+
+  /**
+   * Notifies the call session may handover from one network type to another.
+   *
+   * @param srcTech the source radio technology.
+   *        Possible values: IImsRegistration#RADIO_TECH_*.
+   * @param targetTech the target radio technology.
+   *        Possible values: IImsRegistration#RADIO_TECH_*.
+   */
+  void onCallSessionMayHandover(int srcTech, int targetTech);
+
+  /**
+   * Notifies call session's access techonology has changed.
+   *
+   * @param srcTech the source radio technology.
+   *        Possible values: IImsRegistration#RADIO_TECH_*.
+   * @param targetTech the target radio technology.
+   *        Possible values: IImsRegistration#RADIO_TECH_*.
+   */
+  void onCallSessionHandover(int srcTech, int targetTech);
+
+  /**
+   * Notifies call session's access techonology change has failed.
+   * @param srcTech the source radio technology.
+   *        Possible values: IImsRegistration#RADIO_TECH_*.
+   * @param targetTech the target radio technology.
+   *        Possible values: IImsRegistration#RADIO_TECH_*.
+   * @param reasonInfo the fail reason.
+   *        The reason code are mostly IImsRasonInfo#CODE_UNSPECIFIED and
+   *        IImsRasonInfo#CODE_CALL_DROP_IWLAN_TO_LTE_UNAVAILABLE.
+   */
+  void onCallSessionHandoverFailed(int srcTech, int targetTech, in ImsReasonInfoParcelable reasonInfo);
+
+  /**
+   * Notifies conference state change info in the conference call.
+   *
+   * @param participants the update conference state info.
+   */
+  void onCallSessionConferenceStateUpdated(in ImsConferenceParticipantParcelable[] participants);
+
+  /**
+   * Notifies remove participants from conference request has been delievered to conference server.
+   * onCallSessionConferenceStateUpdated is expected to refresh the participants list.
+   */
+  void onCallSessionRemoveParticipantsRequestDelivered();
+
+  /**
+   * Notifies remove participants from conerence request has been delivered to conference server and failed.
+   */
+  void onCallSessionRemoveParticipantsRequestFailed(in ImsReasonInfoParcelable reasonInfo);
 }

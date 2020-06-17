@@ -1,7 +1,10 @@
 package b2g.telephony.ims;
 interface IImsCallSession {
+  void close();
   @utf8InCpp String getCallId();
   b2g.telephony.ims.ImsCallProfileParcelable getCallProfile();
+  b2g.telephony.ims.ImsCallProfileParcelable getLocalCallProfile();
+  b2g.telephony.ims.ImsCallProfileParcelable getRemoteCallProfile();
   int getState();
   oneway void setListener(in b2g.telephony.ims.IImsCallSessionListener listener);
   void start(@utf8InCpp String callee, in b2g.telephony.ims.ImsCallProfileParcelable profile);
@@ -13,8 +16,11 @@ interface IImsCallSession {
   void sendDtmf(char c, in b2g.telephony.ims.IImsDtmfCallback callback);
   void startDtmf(char c);
   void stopDtmf();
-  void close();
-  void sendUssd(@utf8InCpp String ussdMessage);
+  void sendRttModifyRequest(in b2g.telephony.ims.ImsCallProfileParcelable toProfile);
+  void sendRttModifyResponse(in boolean status);
+  void sendRttMessage(in @utf8InCpp String rttMessage);
+  boolean isMultiparty();
+  void removeParticipants(in @utf8InCpp String[] participants);
   const int STATE_IDLE = 0;
   const int STATE_INITIATED = 1;
   const int STATE_NEGOTIATING = 2;
@@ -25,6 +31,9 @@ interface IImsCallSession {
   const int STATE_TERMINATING = 7;
   const int STATE_TERMINATED = 8;
   const int STATE_INVALID = -1;
-  const int USSD_MODE_NOTIFY = 0;
-  const int USSD_MODE_REQUEST = 1;
+  const int SESSION_MODIFY_REQUEST_SUCCESS = 1;
+  const int SESSION_MODIFY_REQUEST_FAIL = 2;
+  const int SESSION_MODIFY_REQUEST_INVALID = 3;
+  const int SESSION_MODIFY_REQUEST_TIMED_OUT = 4;
+  const int SESSION_MODIFY_REQUEST_REJECTED_BY_REMOTE = 5;
 }

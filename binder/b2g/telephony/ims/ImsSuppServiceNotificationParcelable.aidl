@@ -25,21 +25,17 @@
 
 package b2g.telephony.ims;
 
-parcelable ImsReasonInfoParcelable {
-    /**
-     * For the main reason code.
-     * Possible values: ImsReasonInfo#CODE_*.
-     */
-    int code;
-
-    /**
-     * For the extra information code.
-     * Possible values: ImsReasonInfo#EXTRA_CODE_*.
-     */
-    int extraCode;
-
-    /**
-     * For the extra message of the reason.
-     */
-    @utf8InCpp String extraMessage;
+parcelable ImsSuppServiceNotificationParcelable {
+  /** Type of notification: 0 = MO; 1 = MT */
+  int notificationType;
+  /** TS 27.007 7.17 "code1" or "code2" */
+  int code;
+  /** TS 27.007 7.17 "index" - Not used currently*/
+  int index;
+  /** TS 27.007 7.17 "type" (MT only) - Not used currently */
+  int type;
+  /** TS 27.007 7.17 "number" (MT only) */
+  @utf8InCpp String number;
+  /** List of forwarded numbers, if any */
+  @utf8InCpp String[] history;
 }

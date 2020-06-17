@@ -518,6 +518,23 @@ interface IImsReasonInfo {
    */
   const int CODE_UT_SS_MODIFIED_TO_DIAL_VIDEO = 825;
 
+  /*
+   * CALL DROP error codes (Call could drop because of many reasons like Network not available,
+   *  handover, failed, etc)
+   */
+  /**
+   * CALL DROP error code for the case when a device is ePDG capable and when the user is on an
+   * active wifi call and at the edge of coverage and there is no qualified LTE network available
+   * to handover the call to. We get a handover NOT_TRIGERRED message from the modem. This error
+   * code is received as part of the handover message.
+   */
+  const int CODE_CALL_DROP_IWLAN_TO_LTE_UNAVAILABLE = 1100;
+
+  /**
+   * For MultiEndPoint - Call was rejected elsewhere
+   */
+  const int CODE_REJECTED_ELSEWHERE = 1017;
+
   /**
    * Supplementary services (HOLD/RESUME) failure error codes.
    * Values for Supplemetary services failure - Failed, Cancelled and Re-Invite collision.
@@ -535,4 +552,179 @@ interface IImsReasonInfo {
    * Supplementary Services (HOLD/RESUME) - the command resulted in a re-invite collision.
    */
   const int CODE_SUPP_SVC_REINVITE_COLLISION = 1203;
+
+  /** The call cannot be established because RADIO is OFF */
+  const int CODE_RADIO_OFF = 1500;
+
+  /**
+   * Supplementary services (HOLD/RESUME) failure error codes.
+   * Values for Supplemetary services failure - Failed, Cancelled and Re-Invite collision.
+   */
+
+  /** The call cannot be established because of no valid SIM */
+  const int CODE_NO_VALID_SIM = 1501;
+
+  /** The failure is due internal error at modem */
+  const int CODE_RADIO_INTERNAL_ERROR = 1502;
+
+  /** The failure is due to UE timer expired while waiting for a response from network */
+  const int CODE_NETWORK_RESP_TIMEOUT = 1503;
+
+  /** The failure is due to explicit reject from network */
+  const int CODE_NETWORK_REJECT = 1504;
+
+  /** The failure is due to radio access failure. ex. RACH failure */
+  const int CODE_RADIO_ACCESS_FAILURE = 1505;
+
+  /** Call/IMS registration failed/dropped because of a RLF */
+  const int CODE_RADIO_LINK_FAILURE = 1506;
+
+  /** Call/IMS registration failed/dropped because of radio link lost */
+  const int CODE_RADIO_LINK_LOST = 1507;
+
+  /** The call Call/IMS registration failed because of a radio uplink issue */
+  const int CODE_RADIO_UPLINK_FAILURE = 1508;
+
+  /** Call failed because of a RRC connection setup failure */
+  const int CODE_RADIO_SETUP_FAILURE = 1509;
+
+  /** Call failed/dropped because of RRC connection release from NW */
+  const int CODE_RADIO_RELEASE_NORMAL = 1510;
+
+  /** Call failed/dropped because of RRC abnormally released by modem/network */
+  const int CODE_RADIO_RELEASE_ABNORMAL = 1511;
+
+  /** Call/IMS registration is failed/dropped because of a network detach */
+  const int CODE_NETWORK_DETACH = 1513;
+
+  /**
+   * Ongoing call, and call waiting is disabled.
+   * <p>
+   * Used with implicit call rejection.
+   */
+  const int CODE_REJECT_ONGOING_CALL_WAITING_DISABLED = 1601;
+
+  /**
+   * A call is ongoing on another sub.
+   * <p>
+   * Used with implicit call rejection.
+   */
+  const int CODE_REJECT_CALL_ON_OTHER_SUB = 1602;
+
+  /**
+   * CDMA call collision.
+   * <p>
+   * Used with implicit call rejection.
+   */
+  const int CODE_REJECT_1X_COLLISION = 1603;
+
+  /**
+   * IMS is not registered for service yet.
+   * <p>
+   * Used with implicit call rejection.
+   */
+  const int CODE_REJECT_SERVICE_NOT_REGISTERED = 1604;
+
+  /**
+   * The call type is not allowed on the current RAT.
+   * <p>
+   * Used with implicit call rejection.
+   */
+  const int CODE_REJECT_CALL_TYPE_NOT_ALLOWED = 1605;
+
+  /**
+   * And emergency call is ongoing.
+   * <p>
+   * Used with implicit call rejection.
+   */
+  const int CODE_REJECT_ONGOING_E911_CALL = 1606;
+
+  /**
+   * Another call is in the process of being establilshed.
+   * <p>
+   * Used with implicit call rejection.
+   */
+  const int CODE_REJECT_ONGOING_CALL_SETUP = 1607;
+
+  /**
+   * Maximum number of allowed calls are already in progress.
+   * <p>
+   * Used with implicit call rejection.
+   */
+  const int CODE_REJECT_MAX_CALL_LIMIT_REACHED = 1608;
+
+  /**
+   * Invalid/unsupported SIP headers received.
+   * <p>
+   * Used with implicit call rejection.
+   */
+  const int CODE_REJECT_UNSUPPORTED_SIP_HEADERS = 1609;
+
+  /**
+   * An internal error occured while processing the call.
+   * <p>
+   * Used with implicit call rejection.
+   */
+  const int CODE_REJECT_INTERNAL_ERROR = 1612;
+
+  /**
+   * Call failure due to lack of dedicated bearer.
+   * <p>
+   * Used with implicit call rejection.
+   */
+  const int CODE_REJECT_QOS_FAILURE = 1613;
+
+  /**
+   * A call handover is in progress.
+   * <p>
+   * Used with implicit call rejection.
+   */
+  const int CODE_REJECT_ONGOING_HANDOVER = 1614;
+
+  /**
+   * A conference call is ongoing.
+   * <p>
+   * Used with implicit call rejection.
+   */
+  const int CODE_REJECT_ONGOING_CONFERENCE_CALL = 1618;
+
+  /**
+   * A video call with AVPF is not supported.
+   * <p>
+   * Used with implicit call rejection.
+   */
+  const int CODE_REJECT_VT_AVPF_NOT_ALLOWED = 1619;
+
+  /**
+   * And encrypted call is ongoing; other calls not supported.
+   * <p>
+   * Used with implicit call rejection.
+   */
+  const int CODE_REJECT_ONGOING_ENCRYPTED_CALL = 1620;
+
+  /*
+   * Extra codes for the specific code value
+   * This value can be referred when the code is CODE_LOCAL_CALL_CS_RETRY_REQUIRED.
+   */
+  /**
+   * An extra that may be populated when the {@link #CODE_LOCAL_CALL_CS_RETRY_REQUIRED} result has
+   * been returned.
+   * <p>
+   * Try to connect the call using CS
+   */
+  const int EXTRA_CODE_CALL_RETRY_NORMAL = 1;
+  /**
+   * An extra that may be populated when the {@link #CODE_LOCAL_CALL_CS_RETRY_REQUIRED} result has
+   * been returned.
+   * <p>
+   * Try to connect the call using CS and do not notify the user.
+   */
+  const int EXTRA_CODE_CALL_RETRY_SILENT_REDIAL = 2;
+  /**
+   * An extra that may be populated when the {@link #CODE_LOCAL_CALL_CS_RETRY_REQUIRED} result has
+   * been returned.
+   * <p>
+   * Try to connect the call using CS by using the settings.
+   */
+  const int EXTRA_CODE_CALL_RETRY_BY_SETTINGS = 3;
 }

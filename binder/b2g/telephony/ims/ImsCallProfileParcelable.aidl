@@ -42,6 +42,11 @@ parcelable ImsCallProfileParcelable {
   int callType;
 
   /**
+   * The remote restrict cause.
+   */
+  int restrictCause;
+
+  /**
    * The media profile this call associated with.
    */
   ImsStreamMediaProfileParcelable mediaProfile;
@@ -81,4 +86,18 @@ parcelable ImsCallProfileParcelable {
    * Possible values: IImsCallProfile#DIALSTRING_*.
    */
   int dialString;
+
+  // Unwanted call
+  /**
+   * Whether this call can be marked as unwanted.
+   * If true, this call can be hangup/reject with reason IImsReasonInfo#CODE_USER_MARK_UNWANTED.
+   */
+  boolean canMarkUnwantedCall;
+
+  // Shake & Stir.
+  /**
+   * The VERSTAT for an incoming call's phone number.
+   * Possible values: IImsCallProfile#VERIFICATION_STATUS_*.
+   */
+  int callNumberVerificationStatus;
 }

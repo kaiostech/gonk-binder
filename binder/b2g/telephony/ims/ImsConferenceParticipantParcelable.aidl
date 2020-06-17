@@ -25,21 +25,25 @@
 
 package b2g.telephony.ims;
 
-parcelable ImsReasonInfoParcelable {
-    /**
-     * For the main reason code.
-     * Possible values: ImsReasonInfo#CODE_*.
-     */
-    int code;
+parcelable ImsConferenceParticipantParcelable {
+  /**
+   * The state of participant in conference.
+   * Possible values: IImsConferenceParticipant#STATUS_*.
+   */
+  int status;
 
-    /**
-     * For the extra information code.
-     * Possible values: ImsReasonInfo#EXTRA_CODE_*.
-     */
-    int extraCode;
+  /**
+   * The conference participant's handle, ex: phone number.
+   */
+  @utf8InCpp String handleUri;
 
-    /**
-     * For the extra message of the reason.
-     */
-    @utf8InCpp String extraMessage;
+  /**
+   * The endpoint uri uniquely identifies this confernce participant.
+   */
+  @utf8InCpp String endpointUri;
+
+  /**
+   * The display name of this confernce participant.
+   */
+  @utf8InCpp String displayName;
 }

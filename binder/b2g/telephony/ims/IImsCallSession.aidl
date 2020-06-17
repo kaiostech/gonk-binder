@@ -32,6 +32,12 @@ import b2g.telephony.ims.ImsCallProfileParcelable;
 
 interface IImsCallSession {
   /**
+   * To close this call session.
+   * This objection is not usable after been closed.
+   */
+  void close();
+
+  /**
    * The call ID of the session.
    * @return call ID.
    */
@@ -43,9 +49,17 @@ interface IImsCallSession {
    */
   ImsCallProfileParcelable getCallProfile();
 
-  // Kai doesn't support loca/remote call profile for now.
-  // ImsCallProfile getLocalCallProfile();
-  // ImsCallProfile getRemoteCallProfile();
+  /**
+   * Gets the local call profile that this session is associated with.
+   * @return the local call profile.
+   */
+  ImsCallProfileParcelable getLocalCallProfile();
+
+  /**
+   * Gets the remote call profile that this session is associated with.
+   * @return the remote call profile.
+   */
+  ImsCallProfileParcelable getRemoteCallProfile();
 
   /**
    * Call session states.
@@ -120,6 +134,8 @@ interface IImsCallSession {
    */
   void resume();
 
+
+  // DTMF
   /**
    * Sends a DTMF code. According to <a href="http://tools.ietf.org/html/rfc2833">RFC 2833</a>,
    * event 0 ~ 9 maps to decimal value 0 ~ 9, '*' to 10, '#' to 11, event 'A' ~ 'D' to 12 ~ 15,
@@ -144,22 +160,67 @@ interface IImsCallSession {
    */
   void stopDtmf();
 
-  /**
-   * To close this call session.
-   * This objection is not usable after been closed.
+  // RTT
+  /*
+   * Constants for session modify request sent via IImsCallSession#sendRttModifyRequest.
    */
-  void close();
 
   /**
-   * Mode of USSD message.
+   * Session modify request was successful.
    */
-  const int USSD_MODE_NOTIFY = 0;
-  const int USSD_MODE_REQUEST = 1;
+  const int SESSION_MODIFY_REQUEST_SUCCESS = 1;
 
   /**
-   * Sends an USSD message.
-   *
-   * @param ussdMessage USSD message to send.
+   * Session modify request failed.
    */
-  void sendUssd(@utf8InCpp String ussdMessage);
+  const int SESSION_MODIFY_REQUEST_FAIL = 2;
+
+  /**
+   * Session modify request ignored due to invalid parameters.
+   */
+  const int SESSION_MODIFY_REQUEST_INVALID = 3;
+
+  /**
+   * Session modify request timed out.
+   */
+  const int SESSION_MODIFY_REQUEST_TIMED_OUT = 4;
+
+  /**
+   * Session modify request rejected by remote user.
+   */
+  const int SESSION_MODIFY_REQUEST_REJECTED_BY_REMOTE = 5;
+
+  /**
+   * To issue RTT modify request.
+   * @prarm toProfile the profile with requested changes.
+   */
+  void sendRttModifyRequest(in ImsCallProfileParcelable toProfile);
+
+  /**
+   * To response to remote RTT modify request.
+   * @param status true: to accespt request.
+   *               false: to decline request.
+   */
+  void sendRttModifyResponse(in boolean status);
+
+  /**
+   * Sends RTT message.
+   * @param rttMessage rtt message to be sent.
+   */
+  void sendRttMessage(in @utf8InCpp String rttMessage);
+
+  /**
+   * To determine whether current session is multiparty.
+   * @return true if it is multiparty.
+   */
+  boolean isMultiparty();
+
+  /**
+   * To remove participants from the conference.
+   * The result will be notified via
+   *   IImsCallSessionListener#onCallSessionRemoveParticipantsRequestDelivered if succeed,
+   *   IImsCallSessionListener#callSessionRemoveParticipantsRequestFailed if failed,
+   * @param participants endpointUri list to be remove from the conference call.
+   */
+  void removeParticipants(in @utf8InCpp String[] participants);
 }

@@ -128,4 +128,43 @@ interface IImsCallProfile {
   const int DIALSTRING_NORMAL = 0;
   // const int DIALSTRING_SS_CONF = 1;
   // const int DIALSTRING_USSD = 2;
+
+  // Shake & Stir.
+  /**
+   * Indicates that the network could not perform verification.
+   */
+  const int VERIFICATION_STATUS_NOT_VERIFIED = 0;
+
+  /**
+   * Indicates that verification by the network passed.  This indicates there is a high likelihood
+   * that the call originated from a valid source.
+   */
+  const int VERIFICATION_STATUS_PASSED = 1;
+
+  /**
+   * Indicates that verification by the network failed.  This indicates there is a high likelihood
+   * that the call did not originate from a valid source.
+   */
+  const int VERIFICATION_STATUS_FAILED = 2;
+
+  /**
+   * Call is not restricted on peer side and High Definition media is supported
+   */
+  const int CALL_RESTRICT_CAUSE_NONE = 0;
+
+  /**
+   * High Definition media is not supported on the peer side due to the Radio Access Technology
+   * (RAT) it is are connected to.
+   */
+  const int CALL_RESTRICT_CAUSE_RAT = 1;
+
+  /**
+   * The service has been disabled on the peer side.
+   */
+  const int CALL_RESTRICT_CAUSE_DISABLED = 2;
+
+  /**
+   * High definition media is not currently supported.
+   */
+  const int CALL_RESTRICT_CAUSE_HD = 3;
 }
