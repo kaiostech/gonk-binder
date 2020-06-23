@@ -31,9 +31,15 @@ import b2g.telephony.ims.IImsConfigCallback;
  * Provides APIs to access IMS configuration.
  */
 interface IImsConfig {
-    /**
-     * Config values: Voice over Wi-Fi mode.
-     */
+    // const int VOICE_OVER_WIFI_ROAMING_DISASBLED = 0;
+    // const int VOICE_OVER_WIFI_ROAMING_ENABLED = 1;
+
+    // /**
+    //  * Config item: Wi-Fi calling roaming status.
+    //  * Possible values: VOICE_OVER_WIFI_ROAMING_*.
+    //  */
+    // const int VOICE_OVER_WIFI_ROAMING = 26;
+
     const int WIFI_MODE_WIFI_ONLY = 0;
     const int WIFI_MODE_CELLULAR_PREFERRED = 1;
     const int WIFI_MODE_WIFI_PREFERRED = 2;
@@ -43,6 +49,15 @@ interface IImsConfig {
      * Possible values: WIFI_MODE_*.
      */
     const int VOICE_OVER_WIFI_MODE = 27;
+
+    // const int VOICE_OVER_WIFI_DISABLED = 0;
+    // const int VOICE_OVER_WIFI_ENABLED = 1;
+
+    // /**
+    //  * Config item: voice over Wi-Fi settings.
+    //  * Possivle values: VOICE_OVER_WIFI_*.
+    //  */
+    // const int VOICE_OVER_WIFI_SETTING_ENABLED = 28;
 
     /**
      * Config setter result sttus codes.
@@ -56,15 +71,21 @@ interface IImsConfig {
 
     /**
      * To get integer configuration.
-     * @param item the item to be quried.
+     * @param item
+     *        The item identifier.
+     *   VOICE_OVER_WIFI_MODE = 27.
+     *     possible result values: WIFI_MODE*.
+     *
+     *   VOICE_OVER_WIFI_SETTING_ENABLED = 28.
+     *     Possible result values: VOICE_OVER_WIFI_*.
      * @param callback To receive query result.
    */
     void queryConfigInt(int item, in IImsConfigCallback callback);
 
     /**
      * To setup configuration
-     * @param item the config item to be updated.
-     * @param value the update value.
+     * @param item
+     * @param value
      */
     void setConfigInt(int item, int value, in IImsConfigCallback callback);
 }
