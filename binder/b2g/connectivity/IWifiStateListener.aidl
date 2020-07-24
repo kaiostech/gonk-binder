@@ -16,6 +16,9 @@ oneway interface IWifiStateListener {
 
   /**
    * Notifies current wifi state changed.
+   *
+   * @param state
+   *        possible values: WIFI_STATE_*
    */
-  void onWifiStateChanged(in boolean enabled);
+  void onWifiStateChanged(in int state);
 }

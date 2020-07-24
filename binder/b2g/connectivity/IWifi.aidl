@@ -12,9 +12,19 @@ import b2g.connectivity.IWifiStateListener;
 
 interface IWifi {
   /**
-   * Returns true if wifi is enabled.
+   * Wifi state
    */
-  boolean getEnabledState();
+  const int WIFI_STATE_ENABLING = 1;
+  const int WIFI_STATE_ENABLED = 2;
+  const int WIFI_STATE_DISABLING = 3;
+  const int WIFI_STATE_DISABLED = 4;
+
+  /**
+   * To get current wifi state.
+   *
+   * @return wifi status, possible values: WIFI_STATE_*.
+   */
+  int getWifiState();
 
   /**
    * Register wifi state listener
