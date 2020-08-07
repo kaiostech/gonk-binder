@@ -661,6 +661,13 @@ interface IImsReasonInfo {
   const int CODE_REJECT_UNSUPPORTED_SIP_HEADERS = 1609;
 
   /**
+   * A call transfer is in progress.
+   * <p>
+   * Used with implicit call rejection.
+   */
+  const int CODE_REJECT_ONGOING_CALL_TRANSFER = 1611;
+
+  /**
    * An internal error occured while processing the call.
    * <p>
    * Used with implicit call rejection.

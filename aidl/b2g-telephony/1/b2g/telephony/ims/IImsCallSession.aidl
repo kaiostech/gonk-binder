@@ -21,6 +21,7 @@ interface IImsCallSession {
   void sendRttMessage(in @utf8InCpp String rttMessage);
   boolean isMultiparty();
   void removeParticipants(in @utf8InCpp String[] participants);
+  void consultativeTransfer(in b2g.telephony.ims.IImsCallSession toSession);
   const int STATE_IDLE = 0;
   const int STATE_INITIATED = 1;
   const int STATE_NEGOTIATING = 2;

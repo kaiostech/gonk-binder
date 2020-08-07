@@ -193,4 +193,15 @@ oneway interface IImsCallSessionListener {
    * Notifies remove participants from conerence request has been delivered to conference server and failed.
    */
   void onCallSessionRemoveParticipantsRequestFailed(in ImsReasonInfoParcelable reasonInfo);
+
+  /**
+   * Notifies call transfer request success.
+   */
+  void onCallSessionTransferred();
+
+  /**
+   * Notifies call transfer request failed.
+   * @param reasonInfo failure reason.
+   */
+  void onCallSessionTransferFailed(in ImsReasonInfoParcelable reasonInfo);
 }

@@ -55,7 +55,7 @@ parcelable ImsStreamMediaProfileParcelable {
   /**
    * Current audio direction.
    * Mostly used for MO call ringback tone indication.
-   * Possible values: IImsStreamMediaProfile#DIRECTION_INVALID.
+   * Possible values: IImsStreamMediaProfile#DIRECTION_*.
    */
   int audioDirection;
 

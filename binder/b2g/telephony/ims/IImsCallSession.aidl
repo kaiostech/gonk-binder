@@ -198,7 +198,7 @@ interface IImsCallSession {
 
   /**
    * To response to remote RTT modify request.
-   * @param status true: to accespt request.
+   * @param status true: to accept request.
    *               false: to decline request.
    */
   void sendRttModifyResponse(in boolean status);
@@ -223,4 +223,11 @@ interface IImsCallSession {
    * @param participants endpointUri list to be remove from the conference call.
    */
   void removeParticipants(in @utf8InCpp String[] participants);
+
+  /**
+   * Transfer an established call to another call session
+   *
+   * @param toSession The other ImsCallSession to transfer the ongoing session to.
+   */
+  void consultativeTransfer(in IImsCallSession toSession);
 }

@@ -23,4 +23,6 @@ interface IImsCallSessionListener {
   oneway void onCallSessionConferenceStateUpdated(in b2g.telephony.ims.ImsConferenceParticipantParcelable[] participants);
   oneway void onCallSessionRemoveParticipantsRequestDelivered();
   oneway void onCallSessionRemoveParticipantsRequestFailed(in b2g.telephony.ims.ImsReasonInfoParcelable reasonInfo);
+  oneway void onCallSessionTransferred();
+  oneway void onCallSessionTransferFailed(in b2g.telephony.ims.ImsReasonInfoParcelable reasonInfo);
 }

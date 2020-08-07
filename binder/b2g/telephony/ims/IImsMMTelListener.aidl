@@ -57,5 +57,13 @@ oneway interface IImsMMTelListener {
    * @param session the host session who request merge.
    * @param reasonInfo failure reason.
    */
-  void onCallSessionMergeFailed(in IImsCallSession session, in ImsReasonInfoParcelable reasonInfo);
+  void onCallSessionMergeFailed(in IImsCallSession hostSession, in ImsReasonInfoParcelable reason);
+
+  /**
+   * Notifies when call is rejected by lower level automatically, ex: during consultative transfer session.
+   * @param profile call profile associated with rejected call.
+   * @param reason the reject reason code.
+   *        For Consultative transfer, the reject reason should be IImsReasonInfo#CODE_REJECT_ONGOING_CALL_TRANSFER.
+   */
+  void onRejectedCall(in ImsCallProfileParcelable profile, in ImsReasonInfoParcelable reason);
 }
