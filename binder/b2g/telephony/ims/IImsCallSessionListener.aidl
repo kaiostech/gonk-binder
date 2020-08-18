@@ -37,7 +37,7 @@ oneway interface IImsCallSessionListener {
    *
    * @param profile the stream media profile this call session associated with.
    */
-  void onCallSessionProgressing(in ImsStreamMediaProfileParcelable profile);
+  void onCallSessionProgressing(in ImsStreamMediaProfileParcelable mediaProfile);
 
   /**
    * Notifies call session is started. (IN_CALL).
@@ -125,6 +125,12 @@ oneway interface IImsCallSessionListener {
    * @param rttMessage rtt message.
    */
   void onCallSessionRttMessageReceived(in @utf8InCpp String rttMessage);
+
+  /**
+   * RTT audio indicatin has been changed while in a call.
+   * @param mediaProfile updated mediaProfile
+   */
+  void onCallSessionRttAudioIndicatorChanged(in ImsStreamMediaProfileParcelable mediaProfile);
 
   /**
    * Notifies the supplementary service information for this session.

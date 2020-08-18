@@ -6,6 +6,7 @@ interface IImsConfig {
   const int WIFI_MODE_CELLULAR_PREFERRED = 1;
   const int WIFI_MODE_WIFI_PREFERRED = 2;
   const int VOICE_OVER_WIFI_MODE = 27;
+  const int RTT_SETTING_ENABLED = 66;
   const int OPERATION_STATUS_UNKNOWN = -1;
   const int OPERATION_STATUS_SUCCESS = 0;
   const int OPERATION_STATUS_FAILED = 1;

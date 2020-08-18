@@ -44,6 +44,11 @@ parcelable ImsStreamMediaProfileParcelable {
    */
   int rttMode;
 
+  /**
+   * RTT audio speech indication.
+   */
+  boolean isReceivingRttAudio;
+
   // Currently, Kai does not expose video quality info to user.
   // int videoQuality;
 

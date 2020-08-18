@@ -1,6 +1,6 @@
 package b2g.telephony.ims;
 interface IImsCallSessionListener {
-  oneway void onCallSessionProgressing(in b2g.telephony.ims.ImsStreamMediaProfileParcelable profile);
+  oneway void onCallSessionProgressing(in b2g.telephony.ims.ImsStreamMediaProfileParcelable mediaProfile);
   oneway void onCallSessionStarted(in b2g.telephony.ims.ImsCallProfileParcelable profile);
   oneway void onCallSessionStartFailed(in b2g.telephony.ims.ImsReasonInfoParcelable reasonInfo);
   oneway void onCallSessionTerminated(in b2g.telephony.ims.ImsReasonInfoParcelable reasonInfo);
@@ -14,6 +14,7 @@ interface IImsCallSessionListener {
   oneway void onCallSessionRttModifyRequestReceived(in b2g.telephony.ims.ImsCallProfileParcelable toProfile);
   oneway void onCallSessionRttModifyResponseReceived(in int status);
   oneway void onCallSessionRttMessageReceived(in @utf8InCpp String rttMessage);
+  oneway void onCallSessionRttAudioIndicatorChanged(in b2g.telephony.ims.ImsStreamMediaProfileParcelable mediaProfile);
   oneway void onCallSessionSuppServiceReceived(in b2g.telephony.ims.ImsSuppServiceNotificationParcelable suppSrvNotification);
   oneway void onCallSessionTtyModeReceived(in int mode);
   oneway void onCallSessionMayHandover(int srcTech, int targetTech);

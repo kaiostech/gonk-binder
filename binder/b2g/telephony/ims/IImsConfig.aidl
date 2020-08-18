@@ -45,6 +45,12 @@ interface IImsConfig {
     const int VOICE_OVER_WIFI_MODE = 27;
 
     /**
+     * Config item: RTT status setting.
+     * Possibel values: 0: disabled, 1: enabled.
+     */
+    const int RTT_SETTING_ENABLED = 66;
+
+    /**
      * Config setter result sttus codes.
      */
     const int OPERATION_STATUS_UNKNOWN = -1;
