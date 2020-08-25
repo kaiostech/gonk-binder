@@ -58,4 +58,10 @@ parcelable ImsStreamMediaProfileParcelable {
    * Possible values: IImsStreamMediaProfile#DIRECTION_INVALID.
    */
   int audioDirection;
+
+  /**
+   * Current VoWiFi call quality.
+   * Possible values: IImsStreamMediaProfile#VOWIFI_QUALITY_*
+   */
+  int vowifiQuality;
 }

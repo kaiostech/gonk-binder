@@ -65,4 +65,12 @@ oneway interface IImsStreamMediaProfile {
   const int DIRECTION_RECEIVE = 1;
   const int DIRECTION_SEND = 2;
   const int DIRECTION_SEND_RECEIVE = 3;
+
+  /**
+   * VoWiFi quality constants.
+   */
+  const int VOWIFI_QUALITY_NONE = 0;
+  const int VOWIFI_QUALITY_EXCELLENT = 1;
+  const int VOWIFI_QUALITY_FAIR = 2;
+  const int VOWIFI_QUALITY_BAD = 4;
 }
