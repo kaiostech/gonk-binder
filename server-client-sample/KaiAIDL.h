@@ -17,11 +17,11 @@
 #include <binder/Status.h>
 
 #ifdef CONNECTIVITY_TEST
-#  include <b2g/connectivity/IConnectivity.h>
+#include <b2g/connectivity/IConnectivity.h>
 volatile int serverStop = 0;
 #endif
 
-#define KAIOS_DEBUG(args...) \
+#define KAIOS_DEBUG(args...)                                                   \
   __android_log_print(ANDROID_LOG_INFO, "KaiOS_AIDL_MAIN", ##args)
 
 #endif

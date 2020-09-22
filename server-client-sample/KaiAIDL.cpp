@@ -7,20 +7,20 @@
  * owners.
  */
 
+#include <signal.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <signal.h>
 
+#include "KaiAIDL.h"
 #include <binder/IPCThreadState.h>
 #include <binder/IServiceManager.h>
-#include "KaiAIDL.h"
 
 #ifdef CONNECTIVITY_TEST
-#  include "connectivity/ConnectivityListenerTest.h"
-#  include "connectivity/ConnectivityServerTest.h"
-#  include "connectivity/TetheringListenerTest.h"
-#  include "connectivity/CaptivePortalListenerTest.h"
+#include "connectivity/CaptivePortalListenerTest.h"
+#include "connectivity/ConnectivityListenerTest.h"
+#include "connectivity/ConnectivityServerTest.h"
+#include "connectivity/TetheringListenerTest.h"
 #endif
 
 using android::IBinder;
@@ -36,15 +36,15 @@ using b2g::connectivity::NetworkInfoParcel;
 using b2g::connectivity::TetheringStatusParcel;
 void sigHandler(int aSignal);
 void msleep(unsigned int aMs);
-void convertNetworkInfoParcel(NetworkInfoParcel& aNetworkInfo,
+void convertNetworkInfoParcel(NetworkInfoParcel &aNetworkInfo,
                               int aNetworkType);
 #endif
 
-void print_usage(char* argv[]) {
+void print_usage(char *argv[]) {
   printf("Usage : %s <server/client>\n", argv[0]);
 }
 
-int main(int argc, char* argv[]) {
+int main(int argc, char *argv[]) {
   if (argc < 2 ||
       !(!strncmp(argv[1], "server", 6) || !strncmp(argv[1], "client", 6))) {
     print_usage(argv);
@@ -60,14 +60,14 @@ int main(int argc, char* argv[]) {
     sp<IConnectivity> sConnectivity = nullptr;
     sp<IBinder> binderConnectivity;
 
-#  if 0
+#if 0
     // UnMark to get real service.
     binderConnectivity = sm->getService(IConnectivity::SERVICE_NAME());
-#  else
+#else
     // Acquire test server.
     binderConnectivity = sm->getService(
         android::String16(ConnectivityServerTest::getServiceName()));
-#  endif
+#endif
     KAIOS_DEBUG("acquire binderConnectivity %s",
                 (binderConnectivity != nullptr) ? "success" : "failed");
 
@@ -172,15 +172,15 @@ int main(int argc, char* argv[]) {
 #ifdef CONNECTIVITY_TEST
 void sigHandler(int aSignal) {
   switch (aSignal) {
-    case SIGTERM:
-    case SIGHUP:
-    case SIGINT:
-      serverStop = 1;
-      break;
+  case SIGTERM:
+  case SIGHUP:
+  case SIGINT:
+    serverStop = 1;
+    break;
   }
 }
 
-void convertNetworkInfoParcel(NetworkInfoParcel& aNetworkInfo,
+void convertNetworkInfoParcel(NetworkInfoParcel &aNetworkInfo,
                               int aNetworkType) {
   if (aNetworkType == IConnectivity::NETWORK_TYPE_WIFI) {
     aNetworkInfo.name = std::string("wlan0");

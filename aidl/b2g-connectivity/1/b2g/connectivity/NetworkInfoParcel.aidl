@@ -2,6 +2,7 @@ package b2g.connectivity;
 
 parcelable NetworkInfoParcel {
   @utf8InCpp String name;
+  int netId;
   int state;
   int type;
   int[] prefixLengths;

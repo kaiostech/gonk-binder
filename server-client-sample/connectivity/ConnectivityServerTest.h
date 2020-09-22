@@ -10,23 +10,23 @@
 #ifndef _CONNECTIVITY_SERVER_TEST_H_
 #define _CONNECTIVITY_SERVER_TEST_H_
 
-#include <mutex>
-#include <binder/BinderService.h>
 #include <b2g/connectivity/BnConnectivity.h>
+#include <binder/BinderService.h>
+#include <mutex>
 
 class ConnectivityServerTest
     : public android::BinderService<ConnectivityServerTest>,
       public b2g::connectivity::BnConnectivity {
- public:
+public:
   ConnectivityServerTest();
   ~ConnectivityServerTest() = default;
 
-  static char const* getServiceName() { return "connectivityServerTest"; }
+  static char const *getServiceName() { return "connectivityServerTest"; }
 
-  android::binder::Status isAlive(bool* aLive) override;
+  android::binder::Status isAlive(bool *aLive) override;
 
-  android::status_t dump(
-      int fd, const android::Vector<android::String16>& args) override {
+  android::status_t
+  dump(int fd, const android::Vector<android::String16> &args) override {
     return android::NO_ERROR;
   }
 
@@ -36,25 +36,25 @@ class ConnectivityServerTest
                const android::sp<android::IBinder::DeathRecipient>>;
 
   android::binder::Status addEventListener(
-      const android::sp<b2g::connectivity::IConnectivityEventListener>&
-          listener) override;
+      const android::sp<b2g::connectivity::IConnectivityEventListener>
+          &listener) override;
 
   android::binder::Status removeEventListener(
-      const android::sp<b2g::connectivity::IConnectivityEventListener>&
-          listener) override;
+      const android::sp<b2g::connectivity::IConnectivityEventListener>
+          &listener) override;
 
   android::binder::Status getActiveNetworkInfo(
-      b2g::connectivity::NetworkInfoParcel* aNetworkInfoParcel) override;
+      b2g::connectivity::NetworkInfoParcel *aNetworkInfoParcel) override;
 
   android::binder::Status getNetworkInfos(
-      std::vector<b2g::connectivity::NetworkInfoParcel>* aNetworkInfoParcels)
+      std::vector<b2g::connectivity::NetworkInfoParcel> *aNetworkInfoParcels)
       override;
 
   void updateActiveNetworkInfo(
-      b2g::connectivity::NetworkInfoParcel& aNetworkInfoParcel);
+      b2g::connectivity::NetworkInfoParcel &aNetworkInfoParcel);
 
-  void updateNetworkInfo(
-      b2g::connectivity::NetworkInfoParcel& aNetworkInfoParcel);
+  void
+  updateNetworkInfo(b2g::connectivity::NetworkInfoParcel &aNetworkInfoParcel);
 
   // Tethering function.
   using TetheringListenerTestMap =
@@ -62,19 +62,19 @@ class ConnectivityServerTest
                const android::sp<android::IBinder::DeathRecipient>>;
 
   android::binder::Status getTetheringStatus(
-      b2g::connectivity::TetheringStatusParcel* aTetheringStatusParcel)
+      b2g::connectivity::TetheringStatusParcel *aTetheringStatusParcel)
       override;
 
   android::binder::Status addTetheringStatusListener(
-      const android::sp<b2g::connectivity::ITetheringStatusListener>& listener)
+      const android::sp<b2g::connectivity::ITetheringStatusListener> &listener)
       override;
 
   android::binder::Status removeTetheringStatusListener(
-      const android::sp<b2g::connectivity::ITetheringStatusListener>& listener)
+      const android::sp<b2g::connectivity::ITetheringStatusListener> &listener)
       override;
 
   void updateTetheringStatus(
-      b2g::connectivity::TetheringStatusParcel& aTetheringStatusParcel);
+      b2g::connectivity::TetheringStatusParcel &aTetheringStatusParcel);
 
   // Captive portal function.
   using CaptivePortalListenerTestMap = std::map<
@@ -82,23 +82,23 @@ class ConnectivityServerTest
       const android::sp<android::IBinder::DeathRecipient>>;
 
   android::binder::Status getCaptivePortalLandings(
-      std::vector<b2g::connectivity::CaptivePortalLandingParcel>*
-          aCaptivePortalLandings) override;
+      std::vector<b2g::connectivity::CaptivePortalLandingParcel>
+          *aCaptivePortalLandings) override;
 
   android::binder::Status addCaptivePortalLandingListener(
-      const android::sp<b2g::connectivity::ICaptivePortalLandingListener>&
-          listener) override;
+      const android::sp<b2g::connectivity::ICaptivePortalLandingListener>
+          &listener) override;
 
   android::binder::Status removeCaptivePortalLandingListener(
-      const android::sp<b2g::connectivity::ICaptivePortalLandingListener>&
-          listener) override;
+      const android::sp<b2g::connectivity::ICaptivePortalLandingListener>
+          &listener) override;
 
-  void updateCaptivePortal(b2g::connectivity::CaptivePortalLandingParcel&
-                               aCaptivePortalLandingParcel);
+  void updateCaptivePortal(b2g::connectivity::CaptivePortalLandingParcel
+                               &aCaptivePortalLandingParcel);
 
   // Version control in case we jump into library with newer version.
-  android::status_t onTransact(uint32_t aCode, const ::android::Parcel& aData,
-                               ::android::Parcel* aReply,
+  android::status_t onTransact(uint32_t aCode, const ::android::Parcel &aData,
+                               ::android::Parcel *aReply,
                                uint32_t aFlags) override {
     // Refer IConnectivity.aidl for function nums.
     uint32_t MAX_AIDL_FUNC = IBinder::FIRST_CALL_TRANSACTION + 11;
@@ -111,13 +111,13 @@ class ConnectivityServerTest
     return BBinder::onTransact(aCode, aData, aReply, aFlags);
   }
 
- private:
+private:
   // Network information.
   std::mutex mNetworkEventMutex;
   ConnectivityListenerTestMap mConnectivityListenerTestMap;
   b2g::connectivity::NetworkInfoParcel mActiveNetworkInfo;
   std::vector<b2g::connectivity::NetworkInfoParcel> mNetworkInfos;
-  void InitNetworkInfo(b2g::connectivity::NetworkInfoParcel& networkInfo);
+  void InitNetworkInfo(b2g::connectivity::NetworkInfoParcel &networkInfo);
 
   // Tethering information.
   std::mutex mTetheringMutex;
@@ -131,4 +131,4 @@ class ConnectivityServerTest
       mCaptivePortalLandings;
 };
 
-#endif  // _CONNECTIVITY_SERVER_TEST_H_
+#endif // _CONNECTIVITY_SERVER_TEST_H_

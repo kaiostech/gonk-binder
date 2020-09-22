@@ -10,21 +10,21 @@
 #ifndef _CONNECTIVITY_LISTENER_TEST_H_
 #define _CONNECTIVITY_LISTENER_TEST_H_
 
-#include <binder/BinderService.h>
 #include <b2g/connectivity/BnConnectivityEventListener.h>
+#include <binder/BinderService.h>
 
 class ConnectivityListenerTest
     : public android::BinderService<ConnectivityListenerTest>,
       public b2g::connectivity::BnConnectivityEventListener {
- public:
+public:
   ConnectivityListenerTest();
   ~ConnectivityListenerTest() = default;
 
-  static char const* getServiceName() { return "connectivityListenerTest"; }
+  static char const *getServiceName() { return "connectivityListenerTest"; }
   android::binder::Status onActiveNetworkChanged(
-      const ::b2g::connectivity::NetworkInfoParcel& networkInfo) override;
+      const ::b2g::connectivity::NetworkInfoParcel &networkInfo) override;
   android::binder::Status onNetworkChanged(
-      const ::b2g::connectivity::NetworkInfoParcel& networkInfo) override;
+      const ::b2g::connectivity::NetworkInfoParcel &networkInfo) override;
 };
 
-#endif  // _CONNECTIVITY_LISTENER_TEST_H_
+#endif // _CONNECTIVITY_LISTENER_TEST_H_

@@ -7,11 +7,11 @@
  * owners.
  */
 
-#include <binder/IServiceManager.h>
 #include "TetheringListenerTest.h"
 #include <b2g/connectivity/IConnectivity.h>
+#include <binder/IServiceManager.h>
 
-#define KAIOS_TET_DEBUG(args...) \
+#define KAIOS_TET_DEBUG(args...)                                               \
   __android_log_print(ANDROID_LOG_INFO, "KaiOS_AIDL_TetheringListener", ##args)
 
 using android::IBinder;
@@ -30,7 +30,7 @@ TetheringListenerTest::TetheringListenerTest() {
 }
 
 Status TetheringListenerTest::onTetheringStatusChanged(
-    const TetheringStatusParcel& tetheringStatus) {
+    const TetheringStatusParcel &tetheringStatus) {
   KAIOS_TET_DEBUG(
       "onTetheringStatusChanged. wifiState: %s usbState %s",
       tetheringStatus.wifiState == IConnectivity::TETHERING_STATE_ACTIVE

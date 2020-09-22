@@ -7,13 +7,13 @@
  * owners.
  */
 
-#include <binder/IServiceManager.h>
 #include "ConnectivityListenerTest.h"
 #include "ConnectivityServerTest.h"
 #include <b2g/connectivity/IConnectivity.h>
+#include <binder/IServiceManager.h>
 
-#define KAIOS_CON_DEBUG(args...)                                           \
-  __android_log_print(ANDROID_LOG_INFO, "KaiOS_AIDL_ConnectivityListener", \
+#define KAIOS_CON_DEBUG(args...)                                               \
+  __android_log_print(ANDROID_LOG_INFO, "KaiOS_AIDL_ConnectivityListener",     \
                       ##args)
 
 using android::IBinder;
@@ -41,7 +41,7 @@ ConnectivityListenerTest::ConnectivityListenerTest() {
 }
 
 Status ConnectivityListenerTest::onActiveNetworkChanged(
-    const NetworkInfoParcel& networkInfo) {
+    const NetworkInfoParcel &networkInfo) {
   KAIOS_CON_DEBUG("onActiveNetworkChanged event.");
   for (uint32_t i = 0; i < networkInfo.gateways.size(); i++) {
     KAIOS_CON_DEBUG("Dump gateway[%d] : %s", i,
@@ -54,7 +54,7 @@ Status ConnectivityListenerTest::onActiveNetworkChanged(
 };
 
 Status ConnectivityListenerTest::onNetworkChanged(
-    const NetworkInfoParcel& networkInfo) {
+    const NetworkInfoParcel &networkInfo) {
   KAIOS_CON_DEBUG("onNetworkChanged event.");
 
   // Let's try get active networkinfo directly.
@@ -76,9 +76,10 @@ Status ConnectivityListenerTest::onNetworkChanged(
     Status activeNetworkInfoState =
         sConnectivity->getActiveNetworkInfo(&activeNetworkInfo);
     if (activeNetworkInfoState.isOk()) {
-      KAIOS_CON_DEBUG("Current active networkinfo name:%s type:%d state:%d",
-                      activeNetworkInfo.name.c_str(), activeNetworkInfo.type,
-                      activeNetworkInfo.state);
+      KAIOS_CON_DEBUG(
+          "Current active networkinfo name:%s netId:%d type:%d state:%d",
+          activeNetworkInfo.name.c_str(), activeNetworkInfo.netId,
+          activeNetworkInfo.type, activeNetworkInfo.state);
     } else {
       KAIOS_CON_DEBUG("Failed to get active networkinfo.");
     }
@@ -89,9 +90,9 @@ Status ConnectivityListenerTest::onNetworkChanged(
     if (networkInfoStatus.isOk()) {
       KAIOS_CON_DEBUG("Dump all networkinfos");
       for (uint32_t i = 0; i < networkInfos.size(); i++) {
-        KAIOS_CON_DEBUG("NetworkInfo name: %s, type: %d: state: %d",
-                        networkInfos[i].name.c_str(), networkInfos[i].type,
-                        networkInfos[i].state);
+        KAIOS_CON_DEBUG("NetworkInfo name: %s, netId: %d type: %d: state: %d",
+                        networkInfos[i].name.c_str(), networkInfos[i].netId,
+                        networkInfos[i].type, networkInfos[i].state);
       }
     } else {
       KAIOS_CON_DEBUG("Failed to get networkinfo list");

@@ -20,6 +20,11 @@ parcelable NetworkInfoParcel {
   @utf8InCpp String name;
 
   /**
+   * Interface netid of the network interface.
+   */
+  int netId;
+
+  /**
    * Current network state, one of the b2g.connectivity.IConnectivity.NETWORK_STATE_* constants.
    *
    */
