@@ -95,3 +95,27 @@ aidl_interface {
     ],
 }
 
+aidl_interface {
+    name: "binder_b2g_remotesimunlock_interface",
+    local_include_dir: "binder",
+    srcs: [
+        "binder/b2g/remotesimunlock/IRSURequestListener.aidl",
+        "binder/b2g/remotesimunlock/IRSUService.aidl",
+    ],
+    api_dir: "aidl/b2g-remotesimunlock",
+    backend: {
+        cpp: {
+            enabled: true,
+        },
+        java: {
+            enabled: false,
+        },
+        ndk: {
+            enabled: false,
+        },
+    },
+    versions: [
+        "1",
+    ],
+}
+
