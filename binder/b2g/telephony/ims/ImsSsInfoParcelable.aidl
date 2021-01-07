@@ -26,8 +26,8 @@
 package b2g.telephony.ims;
 
 parcelable ImsSsInfoParcelable {
-    /**
-     * The SS status, possible values are IImsUt.STATUS_*.
-     */
-    int status;
+  /**
+   * The SS status, possible values are IImsUt.STATUS_*.
+   */
+  int status;
 }

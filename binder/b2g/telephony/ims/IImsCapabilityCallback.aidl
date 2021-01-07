@@ -11,14 +11,14 @@
 package b2g.telephony.ims;
 
 oneway interface IImsCapabilityCallback {
-    /**
-     * To notify caller the result of IImsMMTelFeature.changeCapability().
-     * @param capability
-     *        Possible values: b2g.telephony.ims.IImsMMTelFeature.CAPABILITY_TYPE_*.
-     * @param radioTech
-     *        Possible values: b2g.telephony.ims.IImsRegistration.RADIO_TECH_*.
-     * @param status
-     *        Possible values: b2g.telephony.ims.IImsConfig.OPERATION_STATUS_*.
-     */
-    void onChangeCapabilityResponse(int capability, int radioTech, int status);
+  /**
+   * To notify caller the result of IImsMMTelFeature.changeCapability().
+   * @param capability
+   *        Possible values: b2g.telephony.ims.IImsMMTelFeature.CAPABILITY_TYPE_*.
+   * @param radioTech
+   *        Possible values: b2g.telephony.ims.IImsRegistration.RADIO_TECH_*.
+   * @param status
+   *        Possible values: b2g.telephony.ims.IImsConfig.OPERATION_STATUS_*.
+   */
+  void onChangeCapabilityResponse(int capability, int radioTech, int status);
 }

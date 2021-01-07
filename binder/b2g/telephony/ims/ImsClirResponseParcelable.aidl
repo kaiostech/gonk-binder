@@ -26,15 +26,15 @@
 package b2g.telephony.ims;
 
 parcelable ImsClirResponseParcelable {
-    /**
-     * Outgoing state.
-     * Possible values are IImsUt.CLIR_OUTGOING_*.
-     */
-    int clirOutgoingStatus;
+  /**
+   * Outgoing state.
+   * Possible values are IImsUt.CLIR_OUTGOING_*.
+   */
+  int clirOutgoingStatus;
 
-    /**
-     * CLIR status.
-     * Possible values are IImsUt.CLIR_STATUS_*.
-     */
-    int clirInterrogationStatus;
+  /**
+   * CLIR status.
+   * Possible values are IImsUt.CLIR_STATUS_*.
+   */
+  int clirInterrogationStatus;
 }

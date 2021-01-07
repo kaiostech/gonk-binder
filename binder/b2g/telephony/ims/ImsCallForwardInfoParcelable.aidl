@@ -26,37 +26,37 @@
 package b2g.telephony.ims;
 
 parcelable ImsCallForwardInfoParcelable {
-   /**
-    * Call forward condition.
-    * Possible values are IImsUt.CDIV_CF_*.
-    */
-   int condition;
+  /**
+   * Call forward condition.
+   * Possible values are IImsUt.CDIV_CF_*.
+   */
+  int condition;
 
-   /**
-    * Call forward status.
-    * Possible values are IImsUt.CF_STATUS_*.
-    */
-   int status;
+  /**
+   * Call forward status.
+   * Possible values are IImsUt.CF_STATUS_*.
+   */
+  int status;
 
-   /**
-    * Call forward toa.
-    * Possible values are IImsUt.TYPE_OF_ADDRESS_*.
-    */
-   int toa;
+  /**
+   * Call forward toa.
+   * Possible values are IImsUt.TYPE_OF_ADDRESS_*.
+   */
+  int toa;
 
-   /**
-    * Call forward service class.
-    * Possible values are IImtUt.SERVICE_CLASS_*.
-    */
-   int serviceClass;
+  /**
+   * Call forward service class.
+   * Possible values are IImtUt.SERVICE_CLASS_*.
+   */
+  int serviceClass;
 
-   /**
-    * Phone number of forwarding address.
-    */
-   @utf8InCpp String number;
+  /**
+   * Phone number of forwarding address.
+   */
+  @utf8InCpp String number;
 
-   /**
-    * Call forward time seconds.
-    */
-   int timeSeconds;
+  /**
+   * Call forward time seconds.
+   */
+  int timeSeconds;
 }

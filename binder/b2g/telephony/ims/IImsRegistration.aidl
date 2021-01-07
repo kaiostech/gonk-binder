@@ -31,22 +31,22 @@ import b2g.telephony.ims.IImsRegistrationListener;
  * Provides APIs to know current IMS service registartion info.
  */
 interface IImsRegistration {
-    const int RADIO_TECH_NONE = 0;
-    const int RADIO_TECH_LTE = 1;
-    const int RADIO_TECH_IWLAN = 2;
-    /**
-     * To get current registartion radio tech.
-     * @return possible values: RADIO_TECH_*.
-     */
-    int getRegistrationTechnology();
+  const int RADIO_TECH_NONE = 0;
+  const int RADIO_TECH_LTE = 1;
+  const int RADIO_TECH_IWLAN = 2;
+  /**
+   * To get current registartion radio tech.
+   * @return possible values: RADIO_TECH_*.
+   */
+  int getRegistrationTechnology();
 
-    /**
-     * To add status change listener.
-     */
-    oneway void addListener(IImsRegistrationListener listener);
+  /**
+   * To add status change listener.
+   */
+  oneway void addListener(IImsRegistrationListener listener);
 
-    /**
-     * To remove status change listener.
-     */
-    oneway void removeListener(IImsRegistrationListener listener);
+  /**
+   * To remove status change listener.
+   */
+  oneway void removeListener(IImsRegistrationListener listener);
 }

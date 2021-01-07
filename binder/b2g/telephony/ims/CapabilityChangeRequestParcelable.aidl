@@ -16,13 +16,13 @@ import b2g.telephony.ims.CapabilityPairParcelable;
  */
 parcelable CapabilityChangeRequestParcelable {
 
-    /**
-     * The capabilities to enable.
-     */
-    CapabilityPairParcelable[] capabilitiesToEnable;
+  /**
+   * The capabilities to enable.
+   */
+  CapabilityPairParcelable[] capabilitiesToEnable;
 
-    /**
-     * The capabilities to disable.
-     */
-    CapabilityPairParcelable[] capabilitiesToDisable;
+  /**
+   * The capabilities to disable.
+   */
+  CapabilityPairParcelable[] capabilitiesToDisable;
 }

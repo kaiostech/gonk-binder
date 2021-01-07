@@ -31,34 +31,34 @@ import b2g.telephony.ims.ImsReasonInfoParcelable;
  * To provide callbacks for registration/service/configuration changeds.
  */
 oneway interface IImsRegistrationListener {
-    /**
-     * Notified when ims registered with radio tech.
-     *
-     * @param imsRadioTech
-     *        Possible values b2g.telephony.ims.RADIO_TECH_*.
-     */
-    void onRegistered(int imsRadioTech);
+  /**
+   * Notified when ims registered with radio tech.
+   *
+   * @param imsRadioTech
+   *        Possible values b2g.telephony.ims.RADIO_TECH_*.
+   */
+  void onRegistered(int imsRadioTech);
 
-    /**
-     * IMS is registering with radio tech.
-     * This is optional because b2g framework currently ignore this event.
-     * @param imsRadioTech
-     *        Possible values: b2g.telephony.ims.IImsRegistration.RADIO_TECH_*.
-     */
-    void onRegistering(int imsRadioTech);
+  /**
+   * IMS is registering with radio tech.
+   * This is optional because b2g framework currently ignore this event.
+   * @param imsRadioTech
+   *        Possible values: b2g.telephony.ims.IImsRegistration.RADIO_TECH_*.
+   */
+  void onRegistering(int imsRadioTech);
 
-    /**
-     *  IMS is unregistered with given reason.
-     * @param reasonInfo possible values: TBD
-     */
-    void onDeregistered(int reasonInfo);
+  /**
+   *  IMS is unregistered with given reason.
+   * @param reasonInfo possible values: TBD
+   */
+  void onDeregistered(int reasonInfo);
 
-    /**
-     * Notified when failed to change to imsRadioTech.
-     * @param imsRadioTech The radio tech we failed to switch to.
-     *                     possible values: b2g.telephony.ims.IImsRegistration.RADIO_TECH_*.
-     * @param reasonInfo
-     *        possible values: TBD
-     */
-    void onTechnologyChangeFailed(int imsRadioTech, in ImsReasonInfoParcelable reason);
+  /**
+   * Notified when failed to change to imsRadioTech.
+   * @param imsRadioTech The radio tech we failed to switch to.
+   *                     possible values: b2g.telephony.ims.IImsRegistration.RADIO_TECH_*.
+   * @param reasonInfo
+   *        possible values: TBD
+   */
+  void onTechnologyChangeFailed(int imsRadioTech, in ImsReasonInfoParcelable reason);
 }

@@ -10,11 +10,11 @@
 package b2g.telephony.ims;
 
 oneway interface IImsCapabilityListener {
-    /**
-     * Notified when network capabilities changed.
-     * The attached radio tech could be retrieved via IImsRegistration.getRegistrationTechnology().
-     * @param capabilities A bitmask of current capabilities.
-     *        Possible values: IImsMMTelFeature.CAPABILITY_TYPE_*.
-     */
-    void onCapabilitiesChanged(int capabilities);
+  /**
+   * Notified when network capabilities changed.
+   * The attached radio tech could be retrieved via IImsRegistration.getRegistrationTechnology().
+   * @param capabilities A bitmask of current capabilities.
+   *        Possible values: IImsMMTelFeature.CAPABILITY_TYPE_*.
+   */
+  void onCapabilitiesChanged(int capabilities);
 }

@@ -10,15 +10,15 @@
 package b2g.telephony.ims;
 
 parcelable CapabilityPairParcelable {
-    /**
-    * The capabilieis.
-    * Possible values are b2g.telephony.ims.IImsMMTelService.CAPABILITY_*.
-    */
-    int capability;
+  /**
+  * The capabilieis.
+  * Possible values are b2g.telephony.ims.IImsMMTelService.CAPABILITY_*.
+  */
+  int capability;
 
-    /**
-    * The radio techonoligies.
-    * Possible values b2g.telephony.ims.IImsRegistration.RADIO_TECH_*.
-    */
-    int radioTech;
+  /**
+  * The radio techonoligies.
+  * Possible values b2g.telephony.ims.IImsRegistration.RADIO_TECH_*.
+  */
+  int radioTech;
 }

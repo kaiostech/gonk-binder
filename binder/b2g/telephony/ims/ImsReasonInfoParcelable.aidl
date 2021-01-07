@@ -26,20 +26,20 @@
 package b2g.telephony.ims;
 
 parcelable ImsReasonInfoParcelable {
-    /**
-     * For the main reason code.
-     * Possible values: ImsReasonInfo#CODE_*.
-     */
-    int code;
+  /**
+   * For the main reason code.
+   * Possible values: ImsReasonInfo#CODE_*.
+   */
+  int code;
 
-    /**
-     * For the extra information code.
-     * Possible values: ImsReasonInfo#EXTRA_CODE_*.
-     */
-    int extraCode;
+  /**
+   * For the extra information code.
+   * Possible values: ImsReasonInfo#EXTRA_CODE_*.
+   */
+  int extraCode;
 
-    /**
-     * For the extra message of the reason.
-     */
-    @utf8InCpp String extraMessage;
+  /**
+   * For the extra message of the reason.
+   */
+  @utf8InCpp String extraMessage;
 }

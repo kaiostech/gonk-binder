@@ -57,6 +57,8 @@ aidl_interface {
         "binder/b2g/telephony/ims/IImsConfigCallback.aidl",
         "binder/b2g/telephony/ims/IImsConferenceParticipant.aidl",
         "binder/b2g/telephony/ims/IImsDtmfCallback.aidl",
+        "binder/b2g/telephony/ims/IImsEcbm.aidl",
+        "binder/b2g/telephony/ims/IImsEcbmListener.aidl",
         "binder/b2g/telephony/ims/IImsFeatureStatusListener.aidl",
         "binder/b2g/telephony/ims/IImsMMTelFeature.aidl",
         "binder/b2g/telephony/ims/IImsMMTelListener.aidl",

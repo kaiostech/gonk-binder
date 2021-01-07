@@ -25,11 +25,12 @@
 
 package b2g.telephony.ims;
 
-import b2g.telephony.ims.IImsMMTelFeature;
-import b2g.telephony.ims.IImsFeatureStatusListener;
-import b2g.telephony.ims.IImsConfig;
-import b2g.telephony.ims.IImsRegistration;
 import b2g.telephony.IDeathNotifier;
+import b2g.telephony.ims.IImsConfig;
+import b2g.telephony.ims.IImsEcbm;
+import b2g.telephony.ims.IImsFeatureStatusListener;
+import b2g.telephony.ims.IImsMMTelFeature;
+import b2g.telephony.ims.IImsRegistration;
 
 interface IImsServiceManager {
 
@@ -77,4 +78,10 @@ interface IImsServiceManager {
    * @param aNotifier the object which is used to represent the universal live status of owner process.
    */
   oneway void setDeathNotifier(in IDeathNotifier aNotifier);
+
+  /**
+   * @param slotId
+   * @return ECBM interface for Emergency CallBack Mode methods.
+   */
+  IImsEcbm getEcbm(int slotId);
 }

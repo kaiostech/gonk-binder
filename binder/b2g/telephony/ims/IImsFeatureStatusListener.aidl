@@ -26,11 +26,11 @@
 package b2g.telephony.ims;
 
 oneway interface IImsFeatureStatusListener {
-    /**
-    * To be notified whenever feature status changed.
-    * The last status could be retrieved via b2g.telephony.ims.IImsMmSelService.getFeatureStatus().
-    * @param featureStatus The latest feature status.
-    *        Possible values: b2g.telephony.ims.IImsMMTelFeature.STATE_*.
-    */
-    void notifyImsFeatureStatus(int featureStatus);
+  /**
+  * To be notified whenever feature status changed.
+  * The last status could be retrieved via b2g.telephony.ims.IImsMmSelService.getFeatureStatus().
+  * @param featureStatus The latest feature status.
+  *        Possible values: b2g.telephony.ims.IImsMMTelFeature.STATE_*.
+  */
+  void notifyImsFeatureStatus(int featureStatus);
 }

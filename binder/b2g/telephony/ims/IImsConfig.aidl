@@ -31,46 +31,46 @@ import b2g.telephony.ims.IImsConfigCallback;
  * Provides APIs to access IMS configuration.
  */
 interface IImsConfig {
-    /**
-     * Config values: Voice over Wi-Fi mode.
-     */
-    const int WIFI_MODE_WIFI_ONLY = 0;
-    const int WIFI_MODE_CELLULAR_PREFERRED = 1;
-    const int WIFI_MODE_WIFI_PREFERRED = 2;
-
-    /**
-     * Config item: Voice over Wi-Fi mode.
-     * Possible values: WIFI_MODE_*.
-     */
-    const int VOICE_OVER_WIFI_MODE = 27;
-
-    /**
-     * Config item: RTT status setting.
-     * Possibel values: 0: disabled, 1: enabled.
-     */
-    const int RTT_SETTING_ENABLED = 66;
-
-    /**
-     * Config setter result sttus codes.
-     */
-    const int OPERATION_STATUS_UNKNOWN = -1;
-    const int OPERATION_STATUS_SUCCESS = 0;
-    const int OPERATION_STATUS_FAILED =  1;
-    const int OPERATION_STATUS_UNSUPPORTED_CAUSE_NONE = 2;
-    const int OPERATION_STATUS_UNSUPPORTED_CAUSE_RAT = 3;
-    const int OPERATION_STATUS_UNSUPPORTED_CAUSE_DISABLED = 4;
-
-    /**
-     * To get integer configuration.
-     * @param item the item to be quried.
-     * @param callback To receive query result.
+  /**
+   * Config values: Voice over Wi-Fi mode.
    */
-    void queryConfigInt(int item, in IImsConfigCallback callback);
+  const int WIFI_MODE_WIFI_ONLY = 0;
+  const int WIFI_MODE_CELLULAR_PREFERRED = 1;
+  const int WIFI_MODE_WIFI_PREFERRED = 2;
 
-    /**
-     * To setup configuration
-     * @param item the config item to be updated.
-     * @param value the update value.
-     */
-    void setConfigInt(int item, int value, in IImsConfigCallback callback);
+  /**
+   * Config item: Voice over Wi-Fi mode.
+   * Possible values: WIFI_MODE_*.
+   */
+  const int VOICE_OVER_WIFI_MODE = 27;
+
+  /**
+   * Config item: RTT status setting.
+   * Possibel values: 0: disabled, 1: enabled.
+   */
+  const int RTT_SETTING_ENABLED = 66;
+
+  /**
+   * Config setter result sttus codes.
+   */
+  const int OPERATION_STATUS_UNKNOWN = -1;
+  const int OPERATION_STATUS_SUCCESS = 0;
+  const int OPERATION_STATUS_FAILED =  1;
+  const int OPERATION_STATUS_UNSUPPORTED_CAUSE_NONE = 2;
+  const int OPERATION_STATUS_UNSUPPORTED_CAUSE_RAT = 3;
+  const int OPERATION_STATUS_UNSUPPORTED_CAUSE_DISABLED = 4;
+
+  /**
+   * To get integer configuration.
+   * @param item the item to be quried.
+   * @param callback To receive query result.
+   */
+  void queryConfigInt(int item, in IImsConfigCallback callback);
+
+  /**
+   * To setup configuration
+   * @param item the config item to be updated.
+   * @param value the update value.
+   */
+  void setConfigInt(int item, int value, in IImsConfigCallback callback);
 }

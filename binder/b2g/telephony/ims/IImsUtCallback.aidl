@@ -31,47 +31,47 @@ import b2g.telephony.ims.ImsClirResponseParcelable;
 import b2g.telephony.ims.ImsSsInfoParcelable;
 
 oneway interface IImsUtCallback {
-    /**
-     * Notifies the call forward query result.
-     * @param id The request id.
-     * @param cfInfos The call forward results.
-     */
-    void onCallForwardQueried(int id, in ImsCallForwardInfoParcelable[] cfInfos);
+  /**
+   * Notifies the call forward query result.
+   * @param id The request id.
+   * @param cfInfos The call forward results.
+   */
+  void onCallForwardQueried(int id, in ImsCallForwardInfoParcelable[] cfInfos);
 
-    /**
-     * Notifies the result of supplementary service configuration updated.
-     * @param id The request id.
-     */
-    void onUtConfigurationUpdated(int id);
+  /**
+   * Notifies the result of supplementary service configuration updated.
+   * @param id The request id.
+   */
+  void onUtConfigurationUpdated(int id);
 
-    /**
-     * @param id The request id.
-     * @param error
-     */
-    void onUtConfigurationUpdateFailed(int id, in ImsReasonInfoParcelable error);
+  /**
+   * @param id The request id.
+   * @param error
+   */
+  void onUtConfigurationUpdateFailed(int id, in ImsReasonInfoParcelable error);
 
-    /**
-     * @param id
-     * @param infos
-     */
-    void onCallBarringQueried(int id, in ImsSsInfoParcelable cbInfo);
+  /**
+   * @param id
+   * @param infos
+   */
+  void onCallBarringQueried(int id, in ImsSsInfoParcelable cbInfo);
 
-    /**
-     * @param id
-     * @param cwInfos
-     */
-    void onCallWaitingQueried(int id, in ImsSsInfoParcelable cwInfo);
+  /**
+   * @param id
+   * @param cwInfos
+   */
+  void onCallWaitingQueried(int id, in ImsSsInfoParcelable cwInfo);
 
-    /**
-     * Notified when query failed.
-     * @param id The request id.
-     * @param error
-     */
-    void utConfigurationQueryFailed(int id, in ImsReasonInfoParcelable error);
+  /**
+   * Notified when query failed.
+   * @param id The request id.
+   * @param error
+   */
+  void utConfigurationQueryFailed(int id, in ImsReasonInfoParcelable error);
 
-    /**
-     * @param id
-     * @param clirStatus
-     */
-    void onClirQueried(int id, in ImsClirResponseParcelable clirStatus);
+  /**
+   * @param id
+   * @param clirStatus
+   */
+  void onClirQueried(int id, in ImsClirResponseParcelable clirStatus);
 }
