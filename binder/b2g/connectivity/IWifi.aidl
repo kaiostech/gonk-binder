@@ -14,6 +14,7 @@ interface IWifi {
   /**
    * Wifi state
    */
+  const int WIFI_STATE_UNKNOWN = -1;
   const int WIFI_STATE_ENABLING = 1;
   const int WIFI_STATE_ENABLED = 2;
   const int WIFI_STATE_DISABLING = 3;
