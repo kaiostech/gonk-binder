@@ -8,12 +8,19 @@
  */
 
 #include "ConnectivityListenerTest.h"
-#include "ConnectivityServerTest.h"
 #include <b2g/connectivity/IConnectivity.h>
 #include <binder/IServiceManager.h>
 
-#define KAIOS_CON_DEBUG(args...)                                               \
-  __android_log_print(ANDROID_LOG_INFO, "KaiOS_AIDL_ConnectivityListener",     \
+#ifdef CONNECTIVITY_CLASSIC_TEST
+#  include "classic/ConnectivityServerTest.h"
+#endif
+
+#ifdef CONNECTIVITY_INHERIT_TEST
+#  include "inherit/ConnectivityInheritServer.h"
+#endif
+
+#define KAIOS_CON_DEBUG(args...)                                           \
+  __android_log_print(ANDROID_LOG_INFO, "KaiOS_AIDL_ConnectivityListener", \
                       ##args)
 
 using android::IBinder;
@@ -41,7 +48,7 @@ ConnectivityListenerTest::ConnectivityListenerTest() {
 }
 
 Status ConnectivityListenerTest::onActiveNetworkChanged(
-    const NetworkInfoParcel &networkInfo) {
+    const NetworkInfoParcel& networkInfo) {
   KAIOS_CON_DEBUG("onActiveNetworkChanged event.");
   for (uint32_t i = 0; i < networkInfo.gateways.size(); i++) {
     KAIOS_CON_DEBUG("Dump gateway[%d] : %s", i,
@@ -54,20 +61,30 @@ Status ConnectivityListenerTest::onActiveNetworkChanged(
 };
 
 Status ConnectivityListenerTest::onNetworkChanged(
-    const NetworkInfoParcel &networkInfo) {
+    const NetworkInfoParcel& networkInfo) {
   KAIOS_CON_DEBUG("onNetworkChanged event.");
 
   // Let's try get active networkinfo directly.
   sp<IServiceManager> sm = android::defaultServiceManager();
   sp<IConnectivity> sConnectivity = nullptr;
   sp<IBinder> binderConnectivity;
-#if 0
-  // UnMark to get real server.
+#ifdef CONNECTIVITY_REAL_SERVER
+  // Try to reach the real binder server on device.
   binderConnectivity = sm->getService(IConnectivity::SERVICE_NAME());
 #else
+
+#  ifdef CONNECTIVITY_CLASSIC_TEST
   // Acquire test server.
   binderConnectivity = sm->getService(
       android::String16(ConnectivityServerTest::getServiceName()));
+#  endif
+
+#  ifdef CONNECTIVITY_INHERIT_TEST
+  // Acquire test server.
+  binderConnectivity = sm->getService(
+      android::String16(ConnectivityInheritServer::getServiceName()));
+#  endif
+
 #endif
 
   if (binderConnectivity != nullptr) {

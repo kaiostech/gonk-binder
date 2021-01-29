@@ -1,0 +1,45 @@
+// (c) 2021 KAI OS TECHNOLOGIES (HONG KONG) LIMITED All rights reserved. This
+// file or any portion thereof may not be reproduced or used in any manner
+// whatsoever without the express written permission of KAI OS TECHNOLOGIES
+// (HONG KONG) LIMITED. KaiOS is the trademark of KAI OS TECHNOLOGIES (HONG KONG)
+// LIMITED or its affiliate company and may be registered in some jurisdictions.
+// All other trademarks are the property of their respective owners.
+//
+
+cc_defaults {
+    name: "libkaios_binder_defaults",
+    cppflags: [
+        "-Wall",
+        "-Werror",
+        "-Wno-unused-parameter",
+    ],
+}
+
+cc_library {
+    name: "libkaios_binder",
+    defaults: ["libkaios_binder_defaults"],
+    srcs: [
+        "connectivity/BaseConnectivity.cpp",
+        "connectivity/BaseWifi.cpp",
+        "telephony/BaseTelephony.cpp",
+        "telephony/data/BaseDataCall.cpp",
+    ],
+    shared_libs: [
+        "libbinder",
+        "liblog",
+        "libutils",
+        "binder_b2g_connectivity_interface-cpp",
+        "binder_b2g_telephony_interface-cpp",
+    ],
+
+    header_libs: ["libkaios_binder_headers"],
+    export_header_lib_headers: ["libkaios_binder_headers"],
+}
+
+cc_library_headers {
+    name: "libkaios_binder_headers",
+    export_include_dirs: ["include"],
+    system_shared_libs: [],
+    stl: "none",
+}
+

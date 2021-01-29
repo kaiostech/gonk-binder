@@ -9,41 +9,38 @@
 # KaiOS AIDL Testing README
 This project is to simulate 3rd party library/daemon use KaiOS AIDL interface.
 
-# GuidelineClient
+# Guideline
 
 ## Service part
 Please refer `connectivity/ConnectivityServerTest.cpp` for service sample code.
 
 `ConnectivityServerTest` acts as a BnConnectivity and also expose it as a service to system with name `connectivityServerTest`
+`ConnectivityIheritServer` acts as a inherit class so you may worry less about build break during aidl code merge process.
 
 ## Client part
 Please refer `KaiAIDL.cpp` Client mode for client sample code.
 
 This sample code accesses Kai system api `IConnectivity`
 
-1. Place this folder under any place which may use Android.bp such as $DIR/external.
-
-2. Unmark following define in KaiAIDL.h to enable client test.
+1. Unmark one of following build flag in Android.bp to enable test daemon.
 ```
-//#define CONNECTIVITY_TEST 1
-```
-
-3. Initialize the environment with `envsetup.sh` script
-```
-source build/envsetup.sh
+// Choose the test case you need.
+//        "-DCONNECTIVITY_REAL_SERVER",
+//        "-DCONNECTIVITY_CLASSIC_TEST",
+//        "-DCONNECTIVITY_INHERIT_TEST",
 ```
 
-3. Make test binary
+2. build test binary
 ```
-make kaios_aidl_testing
+./build.sh kaios_aidl_testing
 ```
 
-4. Push this daemon into device directly.
+3. Push this daemon into device directly.
 ```
    adb root;adb remount;
    adb push out/target/product/<ProjectName>/system/bin/kaios_aidl_testing /system/bin/.
 ```
-5. Run the daemon and start the server/client test you need.
+4. Run the daemon and start the server/client test you need.
    kaios_aidl_testing accept one argument to indicate client or server mod.
    1. adb shell kaios_aidl_testing server
    2. adb shell kaios_aidl_testing client

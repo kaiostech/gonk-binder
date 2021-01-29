@@ -16,14 +16,14 @@
 class TetheringListenerTest
     : public android::BinderService<TetheringListenerTest>,
       public b2g::connectivity::BnTetheringStatusListener {
-public:
+ public:
   TetheringListenerTest();
   ~TetheringListenerTest() = default;
 
-  static char const *getServiceName() { return "tetheringListenerTest"; }
+  static char const* getServiceName() { return "tetheringListenerTest"; }
   android::binder::Status onTetheringStatusChanged(
-      const ::b2g::connectivity::TetheringStatusParcel &tetheringStatus)
+      const ::b2g::connectivity::TetheringStatusParcel& tetheringStatus)
       override;
 };
 
-#endif // _TETHERING_LISTENER_TEST_H_
+#endif  // _TETHERING_LISTENER_TEST_H_

@@ -13,15 +13,14 @@
 #include <b2g/connectivity/BnWifiStateListener.h>
 #include <binder/BinderService.h>
 
-class WifiListenerTest
-    : public android::BinderService<WifiListenerTest>,
-      public b2g::connectivity::BnWifiStateListener {
-public:
+class WifiListenerTest : public android::BinderService<WifiListenerTest>,
+                         public b2g::connectivity::BnWifiStateListener {
+ public:
   WifiListenerTest();
   ~WifiListenerTest() = default;
 
-  static char const *getServiceName() { return "WifiListenerTest"; }
+  static char const* getServiceName() { return "WifiListenerTest"; }
   android::binder::Status onWifiStateChanged(int32_t state) override;
 };
 
-#endif // _WIFI_LISTENER_TEST_H_
+#endif  // _WIFI_LISTENER_TEST_H_

@@ -150,5 +150,10 @@ Basically, Android's string default is utf16.
 const String SOME_SERVICE = "my_service";
 ```
 
+# KaiOS AIDL share library
+- To ensure implementation won't cause build break during aidl version update, we've create this share library for inherit class.
+- Now you may update your aidl safely if your service is implement with this inherit class.
+- Please refer to libkaios_binder/connectivity/BaseConnectivity.cpp for IConnectity as a sample.
+
 # Sample client/service
 - [server-client](./server-client-sample): Please reference this folder for server-client sample code via b2g::connectivity::IConnectivity interfaces.

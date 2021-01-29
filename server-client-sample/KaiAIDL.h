@@ -10,18 +10,13 @@
 #ifndef _KAIOS_AIDL_TEST_H_
 #define _KAIOS_AIDL_TEST_H_
 
-// Setup the test flag.
-//#define CONNECTIVITY_TEST 1
-
 #include <android/log.h>
 #include <binder/Status.h>
 
-#ifdef CONNECTIVITY_TEST
-#include <b2g/connectivity/IConnectivity.h>
+#if defined(CONNECTIVITY_CLASSIC_TEST) || \
+    defined(CONNECTIVITY_INHERIT_TEST) || defined(CONNECTIVITY_REAL_SERVER)
+#  include <b2g/connectivity/IConnectivity.h>
 volatile int serverStop = 0;
 #endif
 
-#define KAIOS_DEBUG(args...)                                                   \
-  __android_log_print(ANDROID_LOG_INFO, "KaiOS_AIDL_MAIN", ##args)
-
-#endif
+#endif  // _KAIOS_AIDL_TEST_H_

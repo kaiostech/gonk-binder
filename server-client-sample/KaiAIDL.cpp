@@ -16,12 +16,22 @@
 #include <binder/IPCThreadState.h>
 #include <binder/IServiceManager.h>
 
-#ifdef CONNECTIVITY_TEST
-#include "connectivity/CaptivePortalListenerTest.h"
-#include "connectivity/ConnectivityListenerTest.h"
-#include "connectivity/ConnectivityServerTest.h"
-#include "connectivity/TetheringListenerTest.h"
+#ifdef CONNECTIVITY_CLASSIC_TEST
+#  include "connectivity/classic/ConnectivityServerTest.h"
 #endif
+#ifdef CONNECTIVITY_INHERIT_TEST
+#  include "connectivity/inherit/ConnectivityInheritServer.h"
+#endif
+
+#if defined(CONNECTIVITY_CLASSIC_TEST) || \
+    defined(CONNECTIVITY_INHERIT_TEST) || defined(CONNECTIVITY_REAL_SERVER)
+#  include "connectivity/CaptivePortalListenerTest.h"
+#  include "connectivity/ConnectivityListenerTest.h"
+#  include "connectivity/TetheringListenerTest.h"
+#endif
+
+#define KAIOS_DEBUG(args...) \
+  __android_log_print(ANDROID_LOG_INFO, "KaiOS_AIDL_MAIN", ##args)
 
 using android::IBinder;
 using android::IPCThreadState;
@@ -29,22 +39,23 @@ using android::IServiceManager;
 using android::sp;
 using android::binder::Status;
 
-#ifdef CONNECTIVITY_TEST
+#if defined(CONNECTIVITY_CLASSIC_TEST) || \
+    defined(CONNECTIVITY_INHERIT_TEST) || defined(CONNECTIVITY_REAL_SERVER)
 using b2g::connectivity::CaptivePortalLandingParcel;
 using b2g::connectivity::IConnectivity;
 using b2g::connectivity::NetworkInfoParcel;
 using b2g::connectivity::TetheringStatusParcel;
 void sigHandler(int aSignal);
 void msleep(unsigned int aMs);
-void convertNetworkInfoParcel(NetworkInfoParcel &aNetworkInfo,
+void convertNetworkInfoParcel(NetworkInfoParcel& aNetworkInfo,
                               int aNetworkType);
 #endif
 
-void print_usage(char *argv[]) {
+void print_usage(char* argv[]) {
   printf("Usage : %s <server/client>\n", argv[0]);
 }
 
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[]) {
   if (argc < 2 ||
       !(!strncmp(argv[1], "server", 6) || !strncmp(argv[1], "client", 6))) {
     print_usage(argv);
@@ -56,17 +67,22 @@ int main(int argc, char *argv[]) {
 
   // Client mode
   if (!strncmp(argv[1], "client", 6)) {
-#ifdef CONNECTIVITY_TEST
     sp<IConnectivity> sConnectivity = nullptr;
     sp<IBinder> binderConnectivity;
 
-#if 0
-    // UnMark to get real service.
+#ifdef CONNECTIVITY_REAL_SERVER
+    // Try to reach real binder server on device.
     binderConnectivity = sm->getService(IConnectivity::SERVICE_NAME());
-#else
-    // Acquire test server.
+#endif
+#ifdef CONNECTIVITY_CLASSIC_TEST
+    // Acquire classic test server.
     binderConnectivity = sm->getService(
         android::String16(ConnectivityServerTest::getServiceName()));
+#endif
+#ifdef CONNECTIVITY_INHERIT_TEST
+    // Acquire inherit test server.
+    binderConnectivity = sm->getService(
+        android::String16(ConnectivityInheritServer::getServiceName()));
 #endif
     KAIOS_DEBUG("acquire binderConnectivity %s",
                 (binderConnectivity != nullptr) ? "success" : "failed");
@@ -113,14 +129,20 @@ int main(int argc, char *argv[]) {
                     captivePortal.isOk() ? "success" : "failed");
       }
     }
-#endif
+
     IPCThreadState::self()->joinThreadPool();
     KAIOS_DEBUG("KaiOS_AIDL_Test client exiting");
 
     // Server mode
   } else if (!strncmp(argv[1], "server", 6)) {
-#ifdef CONNECTIVITY_TEST
-    auto sConnectivityServerTest = new ConnectivityServerTest();
+#ifdef CONNECTIVITY_CLASSIC_TEST
+    auto sConnectivityServer = new ConnectivityServerTest();
+#endif
+#ifdef CONNECTIVITY_INHERIT_TEST
+    auto sConnectivityServer = new ConnectivityInheritServer();
+#endif
+
+#if defined(CONNECTIVITY_CLASSIC_TEST) || defined(CONNECTIVITY_INHERIT_TEST)
     signal(SIGINT, sigHandler);
     signal(SIGTERM, sigHandler);
     signal(SIGHUP, sigHandler);
@@ -140,9 +162,11 @@ int main(int argc, char *argv[]) {
                         : IConnectivity::NETWORK_TYPE_MOBILE;
       convertNetworkInfoParcel(networkInfoParcel, networkType);
       KAIOS_DEBUG("Update networkInfo to %d", networkType);
-      sConnectivityServerTest->updateActiveNetworkInfo(networkInfoParcel);
-      sConnectivityServerTest->updateNetworkInfo(networkInfoParcel);
+      sConnectivityServer->updateActiveNetworkInfo(networkInfoParcel);
+      sConnectivityServer->updateNetworkInfo(networkInfoParcel);
 
+      // Test inherit case without implement full IConnectivity functions.
+#  ifdef CONNECTIVITY_CLASSIC_TEST
       // Tethering status update.
       tetheringStatusParcel.wifiState =
           (tetheringStatusParcel.wifiState ==
@@ -151,41 +175,46 @@ int main(int argc, char *argv[]) {
               : IConnectivity::TETHERING_STATE_INACTIVE;
       KAIOS_DEBUG("Update wifi tethering to %d",
                   tetheringStatusParcel.wifiState);
-      sConnectivityServerTest->updateTetheringStatus(tetheringStatusParcel);
+      sConnectivityServer->updateTetheringStatus(tetheringStatusParcel);
 
       // Captive portal landing update.
       captivePortalParcel.landing = captivePortalParcel.landing ? false : true;
-      KAIOS_DEBUG(" Update captive portal networkType %d to landing %s",
+      KAIOS_DEBUG("Update captive portal networkType %d to landing %s",
                   captivePortalParcel.networkType,
                   captivePortalParcel.landing ? "true" : "false");
-      sConnectivityServerTest->updateCaptivePortal(captivePortalParcel);
-
+      sConnectivityServer->updateCaptivePortal(captivePortalParcel);
+#  endif
       if (serverStop) {
         break;
       }
     }
+#else
+    KAIOS_DEBUG(
+        "Server mode is not support since CONNECTIVITY_REAL_SERVER flag is "
+        "raise.");
 #endif
   }
   exit(0);
 }
 
-#ifdef CONNECTIVITY_TEST
+#if defined(CONNECTIVITY_CLASSIC_TEST) || defined(CONNECTIVITY_INHERIT_TEST)
 void sigHandler(int aSignal) {
   switch (aSignal) {
-  case SIGTERM:
-  case SIGHUP:
-  case SIGINT:
-    serverStop = 1;
-    break;
+    case SIGTERM:
+    case SIGHUP:
+    case SIGINT:
+      serverStop = 1;
+      break;
   }
 }
 
-void convertNetworkInfoParcel(NetworkInfoParcel &aNetworkInfo,
+void convertNetworkInfoParcel(NetworkInfoParcel& aNetworkInfo,
                               int aNetworkType) {
   if (aNetworkType == IConnectivity::NETWORK_TYPE_WIFI) {
     aNetworkInfo.name = std::string("wlan0");
     aNetworkInfo.state = IConnectivity::NETWORK_STATE_CONNECTED;
     aNetworkInfo.type = IConnectivity::NETWORK_TYPE_WIFI;
+    aNetworkInfo.netId = 100;
     aNetworkInfo.prefixLengths.clear();
     aNetworkInfo.prefixLengths.push_back(24);
     aNetworkInfo.prefixLengths.push_back(64);
@@ -202,6 +231,7 @@ void convertNetworkInfoParcel(NetworkInfoParcel &aNetworkInfo,
     aNetworkInfo.name = std::string("rmnet_data0");
     aNetworkInfo.state = IConnectivity::NETWORK_STATE_CONNECTED;
     aNetworkInfo.type = IConnectivity::NETWORK_TYPE_MOBILE;
+    aNetworkInfo.netId = 101;
     aNetworkInfo.prefixLengths.clear();
     aNetworkInfo.prefixLengths.push_back(24);
     aNetworkInfo.prefixLengths.push_back(64);

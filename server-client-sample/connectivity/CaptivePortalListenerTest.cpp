@@ -11,8 +11,8 @@
 #include <b2g/connectivity/IConnectivity.h>
 #include <binder/IServiceManager.h>
 
-#define KAIOS_CAP_DEBUG(args...)                                               \
-  __android_log_print(ANDROID_LOG_INFO, "KaiOS_AIDL_CaptivePortalListener",    \
+#define KAIOS_CAP_DEBUG(args...)                                            \
+  __android_log_print(ANDROID_LOG_INFO, "KaiOS_AIDL_CaptivePortalListener", \
                       ##args)
 
 using android::IBinder;
@@ -31,7 +31,7 @@ CaptivePortalListenerTest::CaptivePortalListenerTest() {
 }
 
 Status CaptivePortalListenerTest::onCaptivePortalLandingChanged(
-    const CaptivePortalLandingParcel &captivePortalLandingParcel) {
+    const CaptivePortalLandingParcel& captivePortalLandingParcel) {
   KAIOS_CAP_DEBUG("onCaptivePortalLandingChanged. : networkType %d landing %s",
                   captivePortalLandingParcel.networkType,
                   captivePortalLandingParcel.landing ? "true" : "false");

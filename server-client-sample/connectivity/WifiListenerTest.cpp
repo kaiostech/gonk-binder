@@ -11,7 +11,7 @@
 #include <b2g/connectivity/IWifi.h>
 #include <binder/IServiceManager.h>
 
-#define KAIOS_DEBUG(args...)                                               \
+#define KAIOS_DEBUG(args...) \
   __android_log_print(ANDROID_LOG_INFO, "KaiOS_AIDL_WifiListener", ##args)
 
 using android::IBinder;

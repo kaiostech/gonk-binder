@@ -14,6 +14,10 @@ cc_defaults {
         "-Wall",
         "-Werror",
         "-Wno-unused-parameter",
+// Choose the test case you need.
+//        "-DCONNECTIVITY_REAL_SERVER",
+//        "-DCONNECTIVITY_CLASSIC_TEST",
+        "-DCONNECTIVITY_INHERIT_TEST",
     ],
 }
 
@@ -23,15 +27,17 @@ cc_binary {
     shared_libs: [
         "libbinder",
         "liblog",
+        "libkaios_binder",
         "libutils",
         "binder_b2g_connectivity_interface-cpp",
     ],
     srcs: [
         "connectivity/CaptivePortalListenerTest.cpp",
         "connectivity/ConnectivityListenerTest.cpp",
-        "connectivity/ConnectivityServerTest.cpp",
         "connectivity/TetheringListenerTest.cpp",
         "connectivity/WifiListenerTest.cpp",
+        "connectivity/classic/ConnectivityServerTest.cpp",
+        "connectivity/inherit/ConnectivityInheritServer.cpp",
         "KaiAIDL.cpp",
     ],
 }
