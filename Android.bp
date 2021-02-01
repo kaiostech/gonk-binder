@@ -39,6 +39,30 @@ aidl_interface {
 }
 
 aidl_interface {
+    name: "binder_b2g_system_interface",
+    local_include_dir: "binder",
+    srcs: [
+        "binder/b2g/system/ISystem.aidl",
+        "binder/b2g/system/ISystemEventListener.aidl",
+    ],
+    api_dir: "aidl/b2g-system",
+    backend: {
+        cpp: {
+            enabled: true,
+        },
+        java: {
+            enabled: false,
+        },
+        ndk: {
+            enabled: false,
+        },
+    },
+    versions: [
+        "1",
+    ],
+}
+
+aidl_interface {
     name: "binder_b2g_telephony_interface",
     local_include_dir: "binder",
     srcs: [
@@ -120,4 +144,3 @@ aidl_interface {
         "1",
     ],
 }
-
