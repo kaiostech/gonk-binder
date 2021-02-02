@@ -68,6 +68,7 @@ aidl_interface {
     srcs: [
         "binder/b2g/telephony/IDeathNotifier.aidl",
         "binder/b2g/telephony/ITelephony.aidl",
+        "binder/b2g/telephony/ITelephonyEventListener.aidl",
         "binder/b2g/telephony/data/IDataCall.aidl",
         "binder/b2g/telephony/data/IDataCallEventListener.aidl",
         "binder/b2g/telephony/ims/CapabilityChangeRequestParcelable.aidl",

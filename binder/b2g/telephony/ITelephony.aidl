@@ -25,6 +25,8 @@
 
 package b2g.telephony;
 
+import b2g.telephony.ITelephonyEventListener;
+
 interface ITelephony {
   const String SERVICE_NAME = "b2g_telephony_binder";
 
@@ -64,4 +66,80 @@ interface ITelephony {
    * @return the number phone phones.
    */
   int getPhoneCount();
+
+  /**
+   * Available radio technologies for GSM, UMTS and CDMA.
+   */
+  /** Network type is unknown */
+  const int NETWORK_TYPE_UNKNOWN = 0;
+  /** Current network is GPRS */
+  const int NETWORK_TYPE_GPRS = 1;
+  /** Current network is EDGE */
+  const int NETWORK_TYPE_EDGE = 2;
+  /** Current network is UMTS */
+  const int NETWORK_TYPE_UMTS = 3;
+  /** Current network is CDMA: Either IS95A or IS95B*/
+  const int NETWORK_TYPE_IS95A = 4;
+  const int NETWORK_TYPE_IS95B = 5;
+  /** Current network is 1xRTT*/
+  const int NETWORK_TYPE_1xRTT = 6;
+  /** Current network is EVDO revision 0*/
+  const int NETWORK_TYPE_EVDO_0 = 7;
+  /** Current network is EVDO revision A*/
+  const int NETWORK_TYPE_EVDO_A = 8;
+
+  /** Current network is HSDPA */
+  const int NETWORK_TYPE_HSDPA = 9;
+  /** Current network is HSUPA */
+  const int NETWORK_TYPE_HSUPA = 10;
+  /** Current network is HSPA */
+  const int NETWORK_TYPE_HSPA = 11;
+  /** Current network is EVDO revision B*/
+  const int NETWORK_TYPE_EVDO_B = 12;
+  /** Current network is eHRPD */
+  const int NETWORK_TYPE_EHRPD = 13;
+  /** Current network is LTE */
+  const int NETWORK_TYPE_LTE = 14;
+  /** Current network is HSPA+ */
+  const int NETWORK_TYPE_HSPAP = 15;
+  /** Current network is GSM */
+  const int NETWORK_TYPE_GSM = 16;
+  /** Current network is TD_SCDMA */
+  const int NETWORK_TYPE_TD_SCDMA = 17;
+  /** Current network is IWLAN */
+  const int NETWORK_TYPE_IWLAN = 18;
+  /** Current network is LTE_CA */
+  const int NETWORK_TYPE_LTE_CA = 19;
+  /** Current network is NR(New Radio) 5G. */
+  const int NETWORK_TYPE_NR = 20;
+
+  /** Max network type number. Update as new types are added. Don't add negative types. {@hide} */
+  const int MAX_NETWORK_TYPE = 21;
+
+  /**
+   * Indicates the available voice radio technology,
+   * valid values as defined by RadioTechnology.
+   * @return voice radio technology NETWORK_TYPE_*.
+   */
+  int getVoiceNetworkType(int slotId);
+
+  /**
+   * Indicates the available data radio technology,
+   * valid values as defined by RadioTechnology.
+   * @return data radio technology NETWORK_TYPE_*.
+   */
+  int getDataNetworkType(int slotId);
+
+  /**
+   * Sets listener to listen events.
+   * @param listener the listener to listen events.
+   *        Please refer ITelephonyEventListener for possible events.
+   */
+  oneway void addEventListener(ITelephonyEventListener listener);
+
+  /**
+   * To remove listener.
+   * @param listener listener to be removed.
+   */
+  oneway void removeEventListener(ITelephonyEventListener listener);
 }
