@@ -10,13 +10,13 @@
 #ifndef _CONNECTIVITY_INHERIT_SERVER_H_
 #define _CONNECTIVITY_INHERIT_SERVER_H_
 
-#include <kaios_binder/connectivity/BaseConnectivity.h>
+#include <b2g_stub/connectivity/BaseConnectivity.h>
 #include <binder/BinderService.h>
 #include <mutex>
 
 class ConnectivityInheritServer
     : public android::BinderService<ConnectivityInheritServer>,
-      public kaios_binder::connectivity::BaseConnectivity {
+      public b2g_stub::connectivity::BaseConnectivity {
  public:
   ConnectivityInheritServer();
   ~ConnectivityInheritServer() = default;
