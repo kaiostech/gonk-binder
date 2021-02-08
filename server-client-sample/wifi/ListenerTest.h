@@ -7,20 +7,26 @@
  * owners.
  */
 
-#ifndef _WIFI_LISTENER_TEST_H_
-#define _WIFI_LISTENER_TEST_H_
+#ifndef _LISTENER_TEST_H_
+#define _LISTENER_TEST_H_
 
-#include <b2g/connectivity/BnWifiStateListener.h>
 #include <binder/BinderService.h>
+// TODO: REWRITE_BY_YOURSELF
+#include <b2g/connectivity/BnWifiStateListener.h>
 
-class WifiListenerTest : public android::BinderService<WifiListenerTest>,
-                         public b2g::connectivity::BnWifiStateListener {
+class ListenerTest : public android::BinderService<ListenerTest>,
+                     // TODO: REWRITE_BY_YOURSELF
+                     public b2g::connectivity::BnWifiStateListener {
  public:
-  WifiListenerTest();
-  ~WifiListenerTest() = default;
+  ListenerTest();
+  ~ListenerTest() = default;
 
-  static char const* getServiceName() { return "WifiListenerTest"; }
+  static char const* getServiceName() { return "ListenerTest"; }
+
+  // TODO REWRITE_BY_YOURSELF_START
+  // Replace these function from your aidl.
   android::binder::Status onWifiStateChanged(int32_t state) override;
+  // TODO REWRITE_BY_YOURSELF_END
 };
 
-#endif  // _WIFI_LISTENER_TEST_H_
+#endif  // _LISTENER_TEST_H_

@@ -7,22 +7,24 @@
  * owners.
  */
 
-#ifndef _CONNECTIVITY_INHERIT_SERVER_H_
-#define _CONNECTIVITY_INHERIT_SERVER_H_
+#ifndef _INHERIT_SERVER_TEST_H_
+#define _INHERIT_SERVER_TEST_H_
 
-#include <b2g_stub/connectivity/BaseConnectivity.h>
 #include <binder/BinderService.h>
 #include <mutex>
+// TODO: REWRITE_BY_YOURSELF
+#include <b2g_stub/connectivity/BaseConnectivity.h>
 
-class ConnectivityInheritServer
-    : public android::BinderService<ConnectivityInheritServer>,
-      public b2g_stub::connectivity::BaseConnectivity {
+class InheritServerTest : public android::BinderService<InheritServerTest>,
+                          // TODO: REWRITE_BY_YOURSELF
+                          public b2g_stub::connectivity::BaseConnectivity {
  public:
-  ConnectivityInheritServer();
-  ~ConnectivityInheritServer() = default;
+  InheritServerTest();
+  ~InheritServerTest() = default;
 
-  static char const* getServiceName() { return "connectivityInheritServer"; }
+  static char const* getServiceName() { return "InheritServerTest"; }
 
+  // TODO: REWRITE_BY_YOURSELF_START
   android::binder::Status isAlive(bool* aLive) override;
 
   android::status_t dump(
@@ -31,7 +33,7 @@ class ConnectivityInheritServer
   }
 
   // Network function.
-  using ConnectivityInheritListenerMap =
+  using InheritListenerMap =
       std::map<const android::sp<b2g::connectivity::IConnectivityEventListener>,
                const android::sp<android::IBinder::DeathRecipient>>;
 
@@ -80,10 +82,11 @@ class ConnectivityInheritServer
  private:
   // Network information.
   std::mutex mNetworkEventMutex;
-  ConnectivityInheritListenerMap mConnectivityInheritListenerMap;
+  InheritListenerMap mInheritListenerMap;
   b2g::connectivity::NetworkInfoParcel mActiveNetworkInfo;
   std::vector<b2g::connectivity::NetworkInfoParcel> mNetworkInfos;
   void InitNetworkInfo(b2g::connectivity::NetworkInfoParcel& networkInfo);
+  // TODO: REWRITE_BY_YOURSELF_END
 };
 
-#endif  // _CONNECTIVITY_INHERIT_SERVER_H_
+#endif  // _INHERIT_SERVER_TEST_H_

@@ -7,18 +7,20 @@
  * owners.
  */
 
-#include "ConnectivityServerTest.h"
-#include "b2g/connectivity/BnConnectivity.h"
+#include "ServerTest.h"
 #include <binder/IInterface.h>
 #include <binder/IServiceManager.h>
 #include <binder/ProcessState.h>
 
-#define KAIOS_CON_DEBUG(args...) \
+#define KAIOS_SERVER_DEBUG(args...) \
   __android_log_print(ANDROID_LOG_INFO, "KaiOS_AIDL_ConnectivityServer", ##args)
 
 using android::ProcessState;
 using android::sp;
 using android::binder::Status;
+
+// TODO: REWRITE_BY_YOURSELF_START
+#include "b2g/connectivity/BnConnectivity.h"
 using b2g::connectivity::CaptivePortalLandingParcel;
 using b2g::connectivity::ICaptivePortalLandingListener;
 using b2g::connectivity::IConnectivityEventListener;
@@ -26,7 +28,21 @@ using b2g::connectivity::ITetheringStatusListener;
 using b2g::connectivity::NetworkInfoParcel;
 using b2g::connectivity::TetheringStatusParcel;
 
-ConnectivityServerTest::ConnectivityServerTest() {
+// Helper function.
+void ServerTest::InitNetworkInfo(NetworkInfoParcel& aNetworkInfo) {
+  aNetworkInfo.name.clear();
+  aNetworkInfo.netId = 0;
+  aNetworkInfo.state = IConnectivity::NETWORK_STATE_UNKNOWN;
+  aNetworkInfo.type = IConnectivity::NETWORK_TYPE_UNKNOWN;
+  aNetworkInfo.prefixLengths.clear();
+  aNetworkInfo.ips.clear();
+  aNetworkInfo.gateways.clear();
+  aNetworkInfo.dnses.clear();
+}
+// TODO: REWRITE_BY_YOURSELF_END
+
+ServerTest::ServerTest() {
+  // TODO: REWRITE_BY_YOURSELF
   InitNetworkInfo(mActiveNetworkInfo);
   android::defaultServiceManager()->addService(
       android::String16(getServiceName()), this);
@@ -34,30 +50,30 @@ ConnectivityServerTest::ConnectivityServerTest() {
   process->startThreadPool();
 }
 
-Status ConnectivityServerTest::isAlive(bool* aLive) {
+// TODO: REWRITE_BY_YOURSELF_START
+Status ServerTest::isAlive(bool* aLive) {
   *aLive = true;
   return Status::ok();
 }
 
 // Network function
-Status ConnectivityServerTest::addEventListener(
+Status ServerTest::addEventListener(
     const sp<IConnectivityEventListener>& listener) {
   std::lock_guard lock(mNetworkEventMutex);
 
   class DeathRecipient : public android::IBinder::DeathRecipient {
    public:
-    DeathRecipient(ConnectivityServerTest* connectivityServerTest,
+    DeathRecipient(ServerTest* serverTest,
                    sp<IConnectivityEventListener> listener)
-        : mConnectivityServerTest(connectivityServerTest),
-          mListener(std::move(listener)) {}
+        : mServerTest(serverTest), mListener(std::move(listener)) {}
     ~DeathRecipient() override = default;
     void binderDied(const android::wp<android::IBinder>& /* who */) override {
-      KAIOS_CON_DEBUG("Client is dead, remove listener");
-      mConnectivityServerTest->removeEventListener(mListener);
+      KAIOS_SERVER_DEBUG("Client is dead, remove listener");
+      mServerTest->removeEventListener(mListener);
     }
 
    private:
-    ConnectivityServerTest* mConnectivityServerTest;
+    ServerTest* mServerTest;
     sp<IConnectivityEventListener> mListener;
   };
   sp<android::IBinder::DeathRecipient> deathRecipient =
@@ -65,39 +81,37 @@ Status ConnectivityServerTest::addEventListener(
 
   android::IInterface::asBinder(listener)->linkToDeath(deathRecipient);
 
-  mConnectivityListenerTestMap.insert({listener, deathRecipient});
+  mListenerTestMap.insert({listener, deathRecipient});
   return Status::ok();
 }
 
-Status ConnectivityServerTest::removeEventListener(
+Status ServerTest::removeEventListener(
     const sp<IConnectivityEventListener>& listener) {
   std::lock_guard lock(mNetworkEventMutex);
-  mConnectivityListenerTestMap.erase(listener);
+  mListenerTestMap.erase(listener);
   return Status::ok();
 }
 
-Status ConnectivityServerTest::getActiveNetworkInfo(
-    NetworkInfoParcel* aNetworkInfoParcel) {
+Status ServerTest::getActiveNetworkInfo(NetworkInfoParcel* aNetworkInfoParcel) {
   *aNetworkInfoParcel = mActiveNetworkInfo;
   return Status::ok();
 }
 
-Status ConnectivityServerTest::getNetworkInfos(
+Status ServerTest::getNetworkInfos(
     std::vector<NetworkInfoParcel>* aNetworkInfoParcels) {
   *aNetworkInfoParcels = mNetworkInfos;
   return Status::ok();
 }
 
-void ConnectivityServerTest::updateActiveNetworkInfo(
+void ServerTest::updateActiveNetworkInfo(
     NetworkInfoParcel& aNetworkInfoParcel) {
   mActiveNetworkInfo = aNetworkInfoParcel;
-  for (auto& listenerMap : mConnectivityListenerTestMap) {
+  for (auto& listenerMap : mListenerTestMap) {
     listenerMap.first->onActiveNetworkChanged(aNetworkInfoParcel);
   }
 }
 
-void ConnectivityServerTest::updateNetworkInfo(
-    NetworkInfoParcel& aNetworkInfoParcel) {
+void ServerTest::updateNetworkInfo(NetworkInfoParcel& aNetworkInfoParcel) {
   // Update NetworkInfos cache.
   bool found = false;
   for (uint32_t i = 0; i < mNetworkInfos.size(); i++) {
@@ -113,47 +127,35 @@ void ConnectivityServerTest::updateNetworkInfo(
     mNetworkInfos.push_back(aNetworkInfoParcel);
   }
 
-  for (auto& listenerMap : mConnectivityListenerTestMap) {
+  for (auto& listenerMap : mListenerTestMap) {
     listenerMap.first->onNetworkChanged(aNetworkInfoParcel);
   }
 }
 
-void ConnectivityServerTest::InitNetworkInfo(NetworkInfoParcel& aNetworkInfo) {
-  aNetworkInfo.name.clear();
-  aNetworkInfo.netId = 0;
-  aNetworkInfo.state = IConnectivity::NETWORK_STATE_UNKNOWN;
-  aNetworkInfo.type = IConnectivity::NETWORK_TYPE_UNKNOWN;
-  aNetworkInfo.prefixLengths.clear();
-  aNetworkInfo.ips.clear();
-  aNetworkInfo.gateways.clear();
-  aNetworkInfo.dnses.clear();
-}
-
 // Tethering function
-Status ConnectivityServerTest::getTetheringStatus(
+Status ServerTest::getTetheringStatus(
     TetheringStatusParcel* aTetheringStatusParcel) {
   *aTetheringStatusParcel = mTetheringStatusParcel;
   return Status::ok();
 }
 
-Status ConnectivityServerTest::addTetheringStatusListener(
+Status ServerTest::addTetheringStatusListener(
     const sp<ITetheringStatusListener>& listener) {
   std::lock_guard lock(mTetheringMutex);
 
   class DeathRecipient : public android::IBinder::DeathRecipient {
    public:
-    DeathRecipient(ConnectivityServerTest* connectivityServerTest,
+    DeathRecipient(ServerTest* serverTest,
                    sp<ITetheringStatusListener> listener)
-        : mConnectivityServerTest(connectivityServerTest),
-          mListener(std::move(listener)) {}
+        : mServerTest(serverTest), mListener(std::move(listener)) {}
     ~DeathRecipient() override = default;
     void binderDied(const android::wp<android::IBinder>& /* who */) override {
-      KAIOS_CON_DEBUG("Client is dead, remove tethering listener");
-      mConnectivityServerTest->removeTetheringStatusListener(mListener);
+      KAIOS_SERVER_DEBUG("Client is dead, remove tethering listener");
+      mServerTest->removeTetheringStatusListener(mListener);
     }
 
    private:
-    ConnectivityServerTest* mConnectivityServerTest;
+    ServerTest* mServerTest;
     sp<ITetheringStatusListener> mListener;
   };
   sp<android::IBinder::DeathRecipient> deathRecipient =
@@ -166,14 +168,14 @@ Status ConnectivityServerTest::addTetheringStatusListener(
   return Status::ok();
 }
 
-Status ConnectivityServerTest::removeTetheringStatusListener(
+Status ServerTest::removeTetheringStatusListener(
     const sp<ITetheringStatusListener>& listener) {
   std::lock_guard lock(mTetheringMutex);
   mTetheringListenerTestMap.erase(listener);
   return Status::ok();
 }
 
-void ConnectivityServerTest::updateTetheringStatus(
+void ServerTest::updateTetheringStatus(
     TetheringStatusParcel& aTetheringStatusParcel) {
   mTetheringStatusParcel = aTetheringStatusParcel;
   for (auto& listenerMap : mTetheringListenerTestMap) {
@@ -182,30 +184,29 @@ void ConnectivityServerTest::updateTetheringStatus(
 }
 
 // Captive portal function
-Status ConnectivityServerTest::getCaptivePortalLandings(
+Status ServerTest::getCaptivePortalLandings(
     std::vector<CaptivePortalLandingParcel>* aCaptivePortalLandings) {
   *aCaptivePortalLandings = mCaptivePortalLandings;
   return Status::ok();
 }
 
-Status ConnectivityServerTest::addCaptivePortalLandingListener(
+Status ServerTest::addCaptivePortalLandingListener(
     const sp<ICaptivePortalLandingListener>& listener) {
   std::lock_guard lock(mCaptivePortalMutex);
 
   class DeathRecipient : public android::IBinder::DeathRecipient {
    public:
-    DeathRecipient(ConnectivityServerTest* connectivityServerTest,
+    DeathRecipient(ServerTest* serverTest,
                    sp<ICaptivePortalLandingListener> listener)
-        : mConnectivityServerTest(connectivityServerTest),
-          mListener(std::move(listener)) {}
+        : mServerTest(serverTest), mListener(std::move(listener)) {}
     ~DeathRecipient() override = default;
     void binderDied(const android::wp<android::IBinder>& /* who */) override {
-      KAIOS_CON_DEBUG("Client is dead, remove captive portal listener");
-      mConnectivityServerTest->removeCaptivePortalLandingListener(mListener);
+      KAIOS_SERVER_DEBUG("Client is dead, remove captive portal listener");
+      mServerTest->removeCaptivePortalLandingListener(mListener);
     }
 
    private:
-    ConnectivityServerTest* mConnectivityServerTest;
+    ServerTest* mServerTest;
     sp<ICaptivePortalLandingListener> mListener;
   };
   sp<android::IBinder::DeathRecipient> deathRecipient =
@@ -218,14 +219,14 @@ Status ConnectivityServerTest::addCaptivePortalLandingListener(
   return Status::ok();
 }
 
-Status ConnectivityServerTest::removeCaptivePortalLandingListener(
+Status ServerTest::removeCaptivePortalLandingListener(
     const sp<ICaptivePortalLandingListener>& listener) {
   std::lock_guard lock(mCaptivePortalMutex);
   mCaptivePortalListenerTestMap.erase(listener);
   return Status::ok();
 }
 
-void ConnectivityServerTest::updateCaptivePortal(
+void ServerTest::updateCaptivePortal(
     CaptivePortalLandingParcel& aCaptivePortalLandingParcel) {
   // Update captive portal status.
   bool found = false;
@@ -249,3 +250,4 @@ void ConnectivityServerTest::updateCaptivePortal(
         aCaptivePortalLandingParcel);
   }
 }
+// TODO: REWRITE_BY_YOURSELF_END

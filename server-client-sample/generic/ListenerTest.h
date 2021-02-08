@@ -7,24 +7,29 @@
  * owners.
  */
 
-#ifndef _CONNECTIVITY_LISTENER_TEST_H_
-#define _CONNECTIVITY_LISTENER_TEST_H_
+#ifndef _LISTENER_TEST_H_
+#define _LISTENER_TEST_H_
 
-#include <b2g/connectivity/BnConnectivityEventListener.h>
 #include <binder/BinderService.h>
+// TODO: REWRITE_BY_YOURSELF
+#include <b2g/connectivity/BnConnectivityEventListener.h>
 
-class ConnectivityListenerTest
-    : public android::BinderService<ConnectivityListenerTest>,
-      public b2g::connectivity::BnConnectivityEventListener {
+class ListenerTest : public android::BinderService<ListenerTest>,
+                     // TODO: REWRITE_BY_YOURSELF
+                     public b2g::connectivity::BnConnectivityEventListener {
  public:
-  ConnectivityListenerTest();
-  ~ConnectivityListenerTest() = default;
+  ListenerTest();
+  ~ListenerTest() = default;
 
-  static char const* getServiceName() { return "connectivityListenerTest"; }
+  static char const* getServiceName() { return "ListenerTest"; }
+
+  // TODO REWRITE_BY_YOURSELF_START
+  // Replace these function from your aidl.
   android::binder::Status onActiveNetworkChanged(
       const ::b2g::connectivity::NetworkInfoParcel& networkInfo) override;
   android::binder::Status onNetworkChanged(
       const ::b2g::connectivity::NetworkInfoParcel& networkInfo) override;
+  // TODO REWRITE_BY_YOURSELF_END
 };
 
-#endif  // _CONNECTIVITY_LISTENER_TEST_H_
+#endif  // _LISTENER_TEST_H_

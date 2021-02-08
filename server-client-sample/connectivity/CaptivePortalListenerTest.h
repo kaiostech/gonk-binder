@@ -10,20 +10,26 @@
 #ifndef _CAPTIVE_PORTAL_LISTENER_TEST_H_
 #define _CAPTIVE_PORTAL_LISTENER_TEST_H_
 
-#include <b2g/connectivity/BnCaptivePortalLandingListener.h>
 #include <binder/BinderService.h>
+// TODO: REWRITE_BY_YOURSELF
+#include <b2g/connectivity/BnCaptivePortalLandingListener.h>
 
 class CaptivePortalListenerTest
     : public android::BinderService<CaptivePortalListenerTest>,
+      // TODO: REWRITE_BY_YOURSELF
       public b2g::connectivity::BnCaptivePortalLandingListener {
  public:
   CaptivePortalListenerTest();
   ~CaptivePortalListenerTest() = default;
 
   static char const* getServiceName() { return "captivePortalListenerTest"; }
+
+  // TODO REWRITE_BY_YOURSELF_START
+  // Replace these function from your aidl.
   android::binder::Status onCaptivePortalLandingChanged(
       const ::b2g::connectivity::CaptivePortalLandingParcel&
           captivePortalLandingParcel) override;
+  // TODO REWRITE_BY_YOURSELF_END
 };
 
 #endif  // _CAPTIVE_PORTAL_LISTENER_TEST_H_

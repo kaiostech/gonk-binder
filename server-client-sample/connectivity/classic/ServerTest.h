@@ -7,22 +7,24 @@
  * owners.
  */
 
-#ifndef _CONNECTIVITY_SERVER_TEST_H_
-#define _CONNECTIVITY_SERVER_TEST_H_
+#ifndef _SERVER_TEST_H_
+#define _SERVER_TEST_H_
 
-#include <b2g/connectivity/BnConnectivity.h>
 #include <binder/BinderService.h>
 #include <mutex>
+// TODO: REWRITE_BY_YOURSELF
+#include <b2g/connectivity/BnConnectivity.h>
 
-class ConnectivityServerTest
-    : public android::BinderService<ConnectivityServerTest>,
-      public b2g::connectivity::BnConnectivity {
+class ServerTest : public android::BinderService<ServerTest>,
+                   // TODO: REWRITE_BY_YOURSELF
+                   public b2g::connectivity::BnConnectivity {
  public:
-  ConnectivityServerTest();
-  ~ConnectivityServerTest() = default;
+  ServerTest();
+  ~ServerTest() = default;
 
-  static char const* getServiceName() { return "connectivityServerTest"; }
+  static char const* getServiceName() { return "KaiOSServerTest"; }
 
+  // TODO: REWRITE_BY_YOURSELF_START
   android::binder::Status isAlive(bool* aLive) override;
 
   android::status_t dump(
@@ -31,7 +33,7 @@ class ConnectivityServerTest
   }
 
   // Network function.
-  using ConnectivityListenerTestMap =
+  using ListenerTestMap =
       std::map<const android::sp<b2g::connectivity::IConnectivityEventListener>,
                const android::sp<android::IBinder::DeathRecipient>>;
 
@@ -114,7 +116,7 @@ class ConnectivityServerTest
  private:
   // Network information.
   std::mutex mNetworkEventMutex;
-  ConnectivityListenerTestMap mConnectivityListenerTestMap;
+  ListenerTestMap mListenerTestMap;
   b2g::connectivity::NetworkInfoParcel mActiveNetworkInfo;
   std::vector<b2g::connectivity::NetworkInfoParcel> mNetworkInfos;
   void InitNetworkInfo(b2g::connectivity::NetworkInfoParcel& networkInfo);
@@ -129,6 +131,7 @@ class ConnectivityServerTest
   CaptivePortalListenerTestMap mCaptivePortalListenerTestMap;
   std::vector<b2g::connectivity::CaptivePortalLandingParcel>
       mCaptivePortalLandings;
+  // TODO: REWRITE_BY_YOURSELF_END
 };
 
-#endif  // _CONNECTIVITY_SERVER_TEST_H_
+#endif  // _SERVER_TEST_H_

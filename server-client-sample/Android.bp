@@ -15,9 +15,9 @@ cc_defaults {
         "-Werror",
         "-Wno-unused-parameter",
 // Choose the test case you need.
-        "-DCONNECTIVITY_REAL_SERVER",
-//        "-DCONNECTIVITY_CLASSIC_TEST",
-//        "-DCONNECTIVITY_INHERIT_TEST",
+        "-DREAL_SERVER_TEST",
+//        "-DCLASSIC_TEST",
+//        "-DINHERIT_TEST",
     ],
 }
 
@@ -29,15 +29,34 @@ cc_binary {
         "liblog",
         "libutils",
         "binder_b2g_stub",
+//TODO: REWRITE_BY_YOURSELF
+// Include the library you need.
         "binder_b2g_connectivity_interface-cpp",
     ],
     srcs: [
+// Generic sample code, copy this folder & recreate your own one.
+        "generic/Main.cpp",
+        "generic/ListenerTest.cpp",
+        "generic/classic/ServerTest.cpp",
+        "generic/inherit/InheritServerTest.cpp",
+
+// Connectivity directory, mark temporary.
+/*
+        "connectivity/Main.cpp",
+        "connectivity/ListenerTest.cpp",
         "connectivity/CaptivePortalListenerTest.cpp",
-        "connectivity/ConnectivityListenerTest.cpp",
         "connectivity/TetheringListenerTest.cpp",
-        "connectivity/WifiListenerTest.cpp",
-        "connectivity/classic/ConnectivityServerTest.cpp",
-        "connectivity/inherit/ConnectivityInheritServer.cpp",
-        "KaiAIDL.cpp",
+        "connectivity/classic/ServerTest.cpp",
+        "connectivity/inherit/InheritServerTest.cpp",
+*/
+
+// Wifi directory, mark temporary.
+/*
+        "wifi/Main.cpp",
+        "wifi/ListenerTest.cpp",
+*/
+
+//TODO: REWRITE_BY_YOURSELF
+// Redirect the path to your test code.
     ],
 }

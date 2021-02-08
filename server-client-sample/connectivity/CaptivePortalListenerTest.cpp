@@ -8,7 +8,6 @@
  */
 
 #include "CaptivePortalListenerTest.h"
-#include <b2g/connectivity/IConnectivity.h>
 #include <binder/IServiceManager.h>
 
 #define KAIOS_CAP_DEBUG(args...)                                            \
@@ -19,8 +18,12 @@ using android::IBinder;
 using android::IServiceManager;
 using android::sp;
 using android::binder::Status;
+
+// TODO: REWRITE_BY_YOURSELF_START
+#include <b2g/connectivity/IConnectivity.h>
 using b2g::connectivity::CaptivePortalLandingParcel;
 using b2g::connectivity::IConnectivity;
+// TODO: REWRITE_BY_YOURSELF_END
 
 CaptivePortalListenerTest::CaptivePortalListenerTest() {
   android::defaultServiceManager()->addService(
@@ -30,6 +33,7 @@ CaptivePortalListenerTest::CaptivePortalListenerTest() {
   ps->startThreadPool();
 }
 
+// TODO: REWRITE_BY_YOURSELF_START
 Status CaptivePortalListenerTest::onCaptivePortalLandingChanged(
     const CaptivePortalLandingParcel& captivePortalLandingParcel) {
   KAIOS_CAP_DEBUG("onCaptivePortalLandingChanged. : networkType %d landing %s",
@@ -37,3 +41,4 @@ Status CaptivePortalListenerTest::onCaptivePortalLandingChanged(
                   captivePortalLandingParcel.landing ? "true" : "false");
   return Status::ok();
 };
+// TODO: REWRITE_BY_YOURSELF_END

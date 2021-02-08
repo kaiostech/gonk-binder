@@ -13,9 +13,7 @@
 #include <android/log.h>
 #include <binder/Status.h>
 
-#if defined(CONNECTIVITY_CLASSIC_TEST) || \
-    defined(CONNECTIVITY_INHERIT_TEST) || defined(CONNECTIVITY_REAL_SERVER)
-#  include <b2g/connectivity/IConnectivity.h>
+#if defined(CLASSIC_TEST) || defined(INHERIT_TEST) || defined(REAL_SERVER_TEST)
 volatile int serverStop = 0;
 #endif
 

@@ -7,84 +7,69 @@
  * owners.
  */
 
-#include "ConnectivityListenerTest.h"
+#include "ListenerTest.h"
 #include <b2g/connectivity/IConnectivity.h>
 #include <binder/IServiceManager.h>
 
-#ifdef CONNECTIVITY_CLASSIC_TEST
-#  include "classic/ConnectivityServerTest.h"
-#endif
-
-#ifdef CONNECTIVITY_INHERIT_TEST
-#  include "inherit/ConnectivityInheritServer.h"
-#endif
-
-#define KAIOS_CON_DEBUG(args...)                                           \
-  __android_log_print(ANDROID_LOG_INFO, "KaiOS_AIDL_ConnectivityListener", \
-                      ##args)
+#define KAIOS_LISTENER_DEBUG(args...) \
+  __android_log_print(ANDROID_LOG_INFO, "KaiOS_AIDL_Listener", ##args)
 
 using android::IBinder;
 using android::IServiceManager;
 using android::sp;
 using android::binder::Status;
+
+// TODO: REWRITE_BY_YOURSELF_START
+#include <b2g/connectivity/IConnectivity.h>
+#ifdef CLASSIC_TEST
+#  include "classic/ServerTest.h"
+#endif
+
+#ifdef INHERIT_TEST
+#  include "inherit/InheritServerTest.h"
+#endif
 using b2g::connectivity::IConnectivity;
 using b2g::connectivity::NetworkInfoParcel;
+// TODO: REWRITE_BY_YOURSELF_END
 
-void msleep(unsigned int ms) {
-  int microsecs;
-  struct timeval tv;
-  microsecs = ms * 1000;
-  tv.tv_sec = microsecs / 1000000;
-  tv.tv_usec = microsecs % 1000000;
-  select(0, NULL, NULL, NULL, &tv);
-}
-
-ConnectivityListenerTest::ConnectivityListenerTest() {
+ListenerTest::ListenerTest() {
   android::defaultServiceManager()->addService(
-      android::String16(ConnectivityListenerTest::getServiceName()), this,
-      false, android::IServiceManager::DUMP_FLAG_PRIORITY_DEFAULT);
+      android::String16(ListenerTest::getServiceName()), this, false,
+      android::IServiceManager::DUMP_FLAG_PRIORITY_DEFAULT);
   android::sp<android::ProcessState> ps(android::ProcessState::self());
   ps->startThreadPool();
 }
 
-Status ConnectivityListenerTest::onActiveNetworkChanged(
+// TODO: REWRITE_BY_YOURSELF_STAR
+Status ListenerTest::onActiveNetworkChanged(
     const NetworkInfoParcel& networkInfo) {
-  KAIOS_CON_DEBUG("onActiveNetworkChanged event.");
+  KAIOS_LISTENER_DEBUG("onActiveNetworkChanged event.");
   for (uint32_t i = 0; i < networkInfo.gateways.size(); i++) {
-    KAIOS_CON_DEBUG("Dump gateway[%d] : %s", i,
-                    networkInfo.gateways[i].c_str());
+    KAIOS_LISTENER_DEBUG("Dump gateway[%d] : %s", i,
+                         networkInfo.gateways[i].c_str());
   }
-  KAIOS_CON_DEBUG("Let's try block 5 seconds in event.");
-  msleep(5000);
-  KAIOS_CON_DEBUG("onActiveNetworkChanged event done.");
+  KAIOS_LISTENER_DEBUG("onActiveNetworkChanged event done.");
   return Status::ok();
 };
 
-Status ConnectivityListenerTest::onNetworkChanged(
-    const NetworkInfoParcel& networkInfo) {
-  KAIOS_CON_DEBUG("onNetworkChanged event.");
+Status ListenerTest::onNetworkChanged(const NetworkInfoParcel& networkInfo) {
+  KAIOS_LISTENER_DEBUG("onNetworkChanged event.");
 
-  // Let's try get active networkinfo directly.
+  // Let's try get active networkinfo directly in event.
   sp<IServiceManager> sm = android::defaultServiceManager();
   sp<IConnectivity> sConnectivity = nullptr;
   sp<IBinder> binderConnectivity;
-#ifdef CONNECTIVITY_REAL_SERVER
+#ifdef REAL_SERVER_TEST
   // Try to reach the real binder server on device.
   binderConnectivity = sm->getService(IConnectivity::SERVICE_NAME());
-#else
-
-#  ifdef CONNECTIVITY_CLASSIC_TEST
+#elif CLASSIC_TEST
   // Acquire test server.
-  binderConnectivity = sm->getService(
-      android::String16(ConnectivityServerTest::getServiceName()));
-#  endif
-
-#  ifdef CONNECTIVITY_INHERIT_TEST
-  // Acquire test server.
-  binderConnectivity = sm->getService(
-      android::String16(ConnectivityInheritServer::getServiceName()));
-#  endif
-
+  binderConnectivity =
+      sm->getService(android::String16(ServerTest::getServiceName()));
+#elif INHERIT_TEST
+  // Acquire test inherit server.
+  binderConnectivity =
+      sm->getService(android::String16(InheritServerTest::getServiceName()));
 #endif
 
   if (binderConnectivity != nullptr) {
@@ -93,27 +78,29 @@ Status ConnectivityListenerTest::onNetworkChanged(
     Status activeNetworkInfoState =
         sConnectivity->getActiveNetworkInfo(&activeNetworkInfo);
     if (activeNetworkInfoState.isOk()) {
-      KAIOS_CON_DEBUG(
+      KAIOS_LISTENER_DEBUG(
           "Current active networkinfo name:%s netId:%d type:%d state:%d",
           activeNetworkInfo.name.c_str(), activeNetworkInfo.netId,
           activeNetworkInfo.type, activeNetworkInfo.state);
     } else {
-      KAIOS_CON_DEBUG("Failed to get active networkinfo.");
+      KAIOS_LISTENER_DEBUG("Failed to get active networkinfo.");
     }
 
     // Get all network info.
     std::vector<NetworkInfoParcel> networkInfos;
     Status networkInfoStatus = sConnectivity->getNetworkInfos(&networkInfos);
     if (networkInfoStatus.isOk()) {
-      KAIOS_CON_DEBUG("Dump all networkinfos");
+      KAIOS_LISTENER_DEBUG("Dump all networkinfos");
       for (uint32_t i = 0; i < networkInfos.size(); i++) {
-        KAIOS_CON_DEBUG("NetworkInfo name: %s, netId: %d type: %d: state: %d",
-                        networkInfos[i].name.c_str(), networkInfos[i].netId,
-                        networkInfos[i].type, networkInfos[i].state);
+        KAIOS_LISTENER_DEBUG(
+            "NetworkInfo name: %s, netId: %d type: %d: state: %d",
+            networkInfos[i].name.c_str(), networkInfos[i].netId,
+            networkInfos[i].type, networkInfos[i].state);
       }
     } else {
-      KAIOS_CON_DEBUG("Failed to get networkinfo list");
+      KAIOS_LISTENER_DEBUG("Failed to get networkinfo list");
     }
   }
   return Status::ok();
 };
+// TODO: REWRITE_BY_YOURSELF_END

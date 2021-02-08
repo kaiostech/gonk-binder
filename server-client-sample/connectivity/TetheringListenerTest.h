@@ -10,20 +10,25 @@
 #ifndef _TETHERING_LISTENER_TEST_H_
 #define _TETHERING_LISTENER_TEST_H_
 
-#include <b2g/connectivity/BnTetheringStatusListener.h>
 #include <binder/BinderService.h>
+// TODO: REWRITE_BY_YOURSELF
+#include <b2g/connectivity/BnTetheringStatusListener.h>
 
 class TetheringListenerTest
     : public android::BinderService<TetheringListenerTest>,
+      // TODO: REWRITE_BY_YOURSELF
       public b2g::connectivity::BnTetheringStatusListener {
  public:
   TetheringListenerTest();
   ~TetheringListenerTest() = default;
 
+  // TODO REWRITE_BY_YOURSELF_START
+  // Replace these function from your aidl.
   static char const* getServiceName() { return "tetheringListenerTest"; }
   android::binder::Status onTetheringStatusChanged(
       const ::b2g::connectivity::TetheringStatusParcel& tetheringStatus)
       override;
+  // TODO REWRITE_BY_YOURSELF_END
 };
 
 #endif  // _TETHERING_LISTENER_TEST_H_
