@@ -21,8 +21,12 @@ oneway interface IImsMMTelListener {
    * Called whenever there is a new incoming call.
    *
    * @param session call session object represents the new incoming call.
+   * @param isUssd (not supported) if this flag is true, it indicates this incoming call is for ussd.
+   * @param isUnknown if this flag is true, it indicates this call is marked as an unknown
+   *        dialing call instead of an incoming call. It is happend in case like sending dial command
+   *        (AT command) to modem to initial a outgoing call without UI/Telephony framework involved.
    */
-  void onIncomingCall(IImsCallSession session);
+  void onIncomingCall(IImsCallSession session, boolean isUssd, boolean isUnknown);
 
   /**
    * Notifed when Voice Message count change.

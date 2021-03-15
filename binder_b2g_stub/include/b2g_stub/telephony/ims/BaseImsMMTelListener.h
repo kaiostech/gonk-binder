@@ -20,7 +20,8 @@ class BaseImsMMTelListener : public b2g::telephony::ims::BnImsMMTelListener {
  public:
   // IImsMMTelListener.
   android::binder::Status onIncomingCall(
-      const ::android::sp<::b2g::telephony::ims::IImsCallSession>& session)
+      const ::android::sp<::b2g::telephony::ims::IImsCallSession>& session,
+      bool isUssd, bool isUnknown)
       override;
   android::binder::Status onVoiceMessageCountUpdate(int32_t count) override;
   android::binder::Status onCallSessionMergeStarted(

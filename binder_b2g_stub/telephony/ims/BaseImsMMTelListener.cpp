@@ -22,7 +22,7 @@ namespace ims {
 
 // IImsMMTelListener.
 Status BaseImsMMTelListener::onIncomingCall(
-    const sp<IImsCallSession>& session) {
+    const sp<IImsCallSession>& session, bool isUssd, bool isUnknown) {
   return Status::fromExceptionCode(Status::Exception::EX_UNSUPPORTED_OPERATION);
 }
 
