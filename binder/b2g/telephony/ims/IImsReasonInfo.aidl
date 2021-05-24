@@ -140,7 +140,6 @@ interface IImsReasonInfo {
   const int CODE_LOCAL_HO_NOT_FEASIBLE = 149;
   /**
    * This device does not support IMS.
-   * @hide
    */
   const int CODE_LOCAL_IMS_NOT_SUPPORTED_ON_DEVICE = 150;
 
@@ -599,115 +598,104 @@ interface IImsReasonInfo {
 
   /**
    * Ongoing call, and call waiting is disabled.
-   * <p>
    * Used with implicit call rejection.
    */
   const int CODE_REJECT_ONGOING_CALL_WAITING_DISABLED = 1601;
 
   /**
    * A call is ongoing on another sub.
-   * <p>
    * Used with implicit call rejection.
    */
   const int CODE_REJECT_CALL_ON_OTHER_SUB = 1602;
 
   /**
    * CDMA call collision.
-   * <p>
    * Used with implicit call rejection.
    */
   const int CODE_REJECT_1X_COLLISION = 1603;
 
   /**
    * IMS is not registered for service yet.
-   * <p>
    * Used with implicit call rejection.
    */
   const int CODE_REJECT_SERVICE_NOT_REGISTERED = 1604;
 
   /**
    * The call type is not allowed on the current RAT.
-   * <p>
    * Used with implicit call rejection.
    */
   const int CODE_REJECT_CALL_TYPE_NOT_ALLOWED = 1605;
 
   /**
    * And emergency call is ongoing.
-   * <p>
    * Used with implicit call rejection.
    */
   const int CODE_REJECT_ONGOING_E911_CALL = 1606;
 
   /**
    * Another call is in the process of being establilshed.
-   * <p>
    * Used with implicit call rejection.
    */
   const int CODE_REJECT_ONGOING_CALL_SETUP = 1607;
 
   /**
    * Maximum number of allowed calls are already in progress.
-   * <p>
    * Used with implicit call rejection.
    */
   const int CODE_REJECT_MAX_CALL_LIMIT_REACHED = 1608;
 
   /**
    * Invalid/unsupported SIP headers received.
-   * <p>
    * Used with implicit call rejection.
    */
   const int CODE_REJECT_UNSUPPORTED_SIP_HEADERS = 1609;
 
   /**
    * A call transfer is in progress.
-   * <p>
    * Used with implicit call rejection.
    */
   const int CODE_REJECT_ONGOING_CALL_TRANSFER = 1611;
 
   /**
    * An internal error occured while processing the call.
-   * <p>
    * Used with implicit call rejection.
    */
   const int CODE_REJECT_INTERNAL_ERROR = 1612;
 
   /**
    * Call failure due to lack of dedicated bearer.
-   * <p>
    * Used with implicit call rejection.
    */
   const int CODE_REJECT_QOS_FAILURE = 1613;
 
   /**
    * A call handover is in progress.
-   * <p>
    * Used with implicit call rejection.
    */
   const int CODE_REJECT_ONGOING_HANDOVER = 1614;
 
   /**
    * A conference call is ongoing.
-   * <p>
    * Used with implicit call rejection.
    */
   const int CODE_REJECT_ONGOING_CONFERENCE_CALL = 1618;
 
   /**
    * A video call with AVPF is not supported.
-   * <p>
    * Used with implicit call rejection.
    */
   const int CODE_REJECT_VT_AVPF_NOT_ALLOWED = 1619;
 
   /**
    * And encrypted call is ongoing; other calls not supported.
-   * <p>
    * Used with implicit call rejection.
    */
   const int CODE_REJECT_ONGOING_ENCRYPTED_CALL = 1620;
+
+  /**
+   * The dialed RTT call should be retried without RTT
+   */
+  const int CODE_RETRY_ON_IMS_WITHOUT_RTT = 3001;
 
   /*
    * Extra codes for the specific code value
@@ -716,21 +704,18 @@ interface IImsReasonInfo {
   /**
    * An extra that may be populated when the {@link #CODE_LOCAL_CALL_CS_RETRY_REQUIRED} result has
    * been returned.
-   * <p>
    * Try to connect the call using CS
    */
   const int EXTRA_CODE_CALL_RETRY_NORMAL = 1;
   /**
    * An extra that may be populated when the {@link #CODE_LOCAL_CALL_CS_RETRY_REQUIRED} result has
    * been returned.
-   * <p>
    * Try to connect the call using CS and do not notify the user.
    */
   const int EXTRA_CODE_CALL_RETRY_SILENT_REDIAL = 2;
   /**
    * An extra that may be populated when the {@link #CODE_LOCAL_CALL_CS_RETRY_REQUIRED} result has
    * been returned.
-   * <p>
    * Try to connect the call using CS by using the settings.
    */
   const int EXTRA_CODE_CALL_RETRY_BY_SETTINGS = 3;
