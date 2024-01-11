@@ -2,7 +2,6 @@ package b2g.connectivity;
 interface IConnectivity {
   boolean isAlive();
   b2g.connectivity.NetworkInfoParcel getActiveNetworkInfo();
-  @utf8InCpp String getWifiBssid();
   b2g.connectivity.NetworkInfoParcel[] getNetworkInfos();
   void addEventListener(b2g.connectivity.IConnectivityEventListener listener);
   void removeEventListener(b2g.connectivity.IConnectivityEventListener listener);

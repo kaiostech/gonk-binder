@@ -27,11 +27,6 @@ interface IConnectivity {
   NetworkInfoParcel getActiveNetworkInfo();
 
   /**
-   * Return wifi bssid infor
-   */
-  @utf8InCpp String getWifiBssid();
-
-  /**
    * Returns all NetworkInfo list.
    */
   NetworkInfoParcel[] getNetworkInfos();

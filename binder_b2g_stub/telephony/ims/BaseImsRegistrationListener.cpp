@@ -26,7 +26,7 @@ Status BaseImsRegistrationListener::onRegistering(int32_t imsRadioTech) {
   return Status::fromExceptionCode(Status::Exception::EX_UNSUPPORTED_OPERATION);
 }
 
-Status BaseImsRegistrationListener::onDeregistered(int32_t reasonInfo, const ::std::string& extraMessage) {
+Status BaseImsRegistrationListener::onDeregistered(int32_t reasonInfo) {
   return Status::fromExceptionCode(Status::Exception::EX_UNSUPPORTED_OPERATION);
 }
 

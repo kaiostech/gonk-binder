@@ -22,7 +22,7 @@ class BaseImsRegistrationListener
   // IImsRegistrationListener.
   android::binder::Status onRegistered(int32_t imsRadioTech) override;
   android::binder::Status onRegistering(int32_t imsRadioTech) override;
-  android::binder::Status onDeregistered(int32_t reasonInfo, const ::std::string& extraMessage) override;
+  android::binder::Status onDeregistered(int32_t reasonInfo) override;
   android::binder::Status onTechnologyChangeFailed(
       int32_t imsRadioTech,
       const ::b2g::telephony::ims::ImsReasonInfoParcelable& reason) override;

@@ -51,7 +51,7 @@ oneway interface IImsRegistrationListener {
    *  IMS is unregistered with given reason.
    * @param reasonInfo possible values: TBD
    */
-  void onDeregistered(int reasonInfo, @utf8InCpp String extraMessage);
+  void onDeregistered(int reasonInfo);
 
   /**
    * Notified when failed to change to imsRadioTech.
